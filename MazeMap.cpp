@@ -3,6 +3,7 @@
 #include <vector>
 #include <random>
 #include <algorithm>
+#include <cmath>
 
 using namespace std;
 
@@ -13,8 +14,6 @@ struct coordinate{
     int y = 0;
     int x = 0;
 };
-
-//方法集
 
 //输入初始点，然后打破墙，然后寻路
 //第一个y和x是地图大小，cy和cx是坐标
@@ -97,109 +96,104 @@ coordinate choose_end (int y, int x){
     return {end, x-2};
 }
 
-
-//地图主方法
-
 //确保x和y都为奇数
-void Make_Map(int x, int y){
-    vector<char> hang;
-    vector<vector<char>> map1;
-    vector<char> hang0 (x, '#');
-    vector<char> bian (x, '@');
-    for (int i = 0; i<x; i++){
-        if(i%2==0){
-            hang.push_back('#');  
-        }
-        else{
-            hang.push_back('p');
-        }
-    }
-    hang[0]='@';
-    hang[x-1]='@';
-    hang0[0]='@';
-    hang0[x-1]='@';
-    for (int i = 0; i<y; i++){
-        if (i==0 || i==(y-1)){
-            map1.push_back(bian);
-        }
-        else if (i%2==0){
-            map1.push_back(hang0);
-        }
-        else if (i%2==1){
-            map1.push_back(hang);
-        }
-    }
-    
-    //确定所有1的位置
-    //存储位置坐标
-    vector<coordinate> coordinateOfpass;
-    
-    for(int i = 0; i<map1.size(); i++){
-        for(int j = 0; j < x; j++){
-            if (map1[i][j]=='p'){
-                coordinateOfpass.push_back({i,j});
+vector<vector<char>> Make_Map(int x, int y){
+    while (true){
+        vector<char> hang;
+        vector<vector<char>> map1;
+        vector<char> hang0 (x, '#');
+        vector<char> bian (x, '@');
+        for (int i = 0; i<x; i++){
+            if(i%2==0){
+                hang.push_back('#');  
+            }
+            else{
+                hang.push_back('p');
             }
         }
-    }
-
-    //获取start 和 end 的坐标，用struct储存一下
-    vector<coordinate> startAndend; 
-    startAndend.push_back(choose_start(y));
-    startAndend.push_back(choose_end(y,x));
-
-    //使用"."来表示路
-    map1[startAndend[0].y][startAndend[0].x] = 'S';
-    map1[startAndend[1].y][startAndend[1].x] = 'p';
-    
-    //转换完的坐标储存导另一个vector
-    vector<coordinate> changeFinish;
-    changeFinish.push_back(startAndend[0]);
-    changeFinish.push_back(startAndend[1]);
-
-    breakWall(y, x, startAndend[0].y, startAndend[0].x, map1, changeFinish);
-    int a=0;
-
-    while(true){
-        int times=1;
-        coordinate NowCoordinate = returnTolast(changeFinish, times);
-        if (NowCoordinate.y == -1 && NowCoordinate.x == -1){
-            break;
-        }//处理错误
-
-        if (! breakWall(y, x, NowCoordinate.y, NowCoordinate.x, map1, changeFinish)){
-            while(true){
-                times++;
-                if (NowCoordinate.y == -1 && NowCoordinate.x == -1){
-                    break;
-                }//处理错误
-                coordinate NowCoordinate = returnTolast(changeFinish, times);
-                if (breakWall(y, x, NowCoordinate.y, NowCoordinate.x, map1, changeFinish)){
-                    break;
-                }
+        hang[0]='@';
+        hang[x-1]='@';
+        hang0[0]='@';
+        hang0[x-1]='@';
+        for (int i = 0; i<y; i++){
+            if (i==0 || i==(y-1)){
+                map1.push_back(bian);
             }
-
+            else if (i%2==0){
+                map1.push_back(hang0);
+            }
+            else if (i%2==1){
+                map1.push_back(hang);
+            }
         }
-        int havep = 0;
+        
+        //确定所有1的位置
+        //存储位置坐标
+        vector<coordinate> coordinateOfpass;
+        
         for(int i = 0; i<map1.size(); i++){
             for(int j = 0; j < x; j++){
-                if (map1[i][j]=='p' || map1[i][j]=='D'){
-                    havep++;
+                if (map1[i][j]=='p'){
+                    coordinateOfpass.push_back({i,j});
                 }
             }
         }
-        if(havep==0){
-            break;
-        }
-        a++;
-    }
-    coordinate NowCoordinate = returnTolast(changeFinish, 1);
-    map1[NowCoordinate.y][NowCoordinate.x] = 'D';
 
-    //测试部分
-    for(int i = 0; i<map1.size(); i++){
-        for(int j = 0; j < x; j++){
-            cout << map1[i][j];
+        //获取start 和 end 的坐标，用struct储存一下
+        vector<coordinate> startAndend; 
+        startAndend.push_back(choose_start(y));
+        startAndend.push_back(choose_end(y,x));
+
+        //使用"."来表示路
+        map1[startAndend[0].y][startAndend[0].x] = 'S';
+        map1[startAndend[1].y][startAndend[1].x] = 'p';
+        
+        //转换完的坐标储存导另一个vector
+        vector<coordinate> changeFinish;
+        changeFinish.push_back(startAndend[0]);
+        changeFinish.push_back(startAndend[1]);
+
+        breakWall(y, x, startAndend[0].y, startAndend[0].x, map1, changeFinish);
+        int a=0;
+
+        while(true){
+            int times=1;
+            coordinate NowCoordinate = returnTolast(changeFinish, times);
+            if (NowCoordinate.y == -1 && NowCoordinate.x == -1){
+                break;
+            }//处理错误
+
+            if (! breakWall(y, x, NowCoordinate.y, NowCoordinate.x, map1, changeFinish)){
+                while(true){
+                    times++;
+                    if (NowCoordinate.y == -1 && NowCoordinate.x == -1){
+                        break;
+                    }//处理错误
+                    coordinate NowCoordinate = returnTolast(changeFinish, times);
+                    if (breakWall(y, x, NowCoordinate.y, NowCoordinate.x, map1, changeFinish)){
+                        break;
+                    }
+                }
+
+            }
+            int havep = 0;
+            for(int i = 0; i<map1.size(); i++){
+                for(int j = 0; j < x; j++){
+                    if (map1[i][j]=='p' || map1[i][j]=='D'){
+                        havep++;
+                    }
+                }
+            }
+            if(havep==0){
+                break;
+            }
+            a++;
         }
-        cout<<endl;
-    } 
+        coordinate NowCoordinate = returnTolast(changeFinish, 1);
+        map1[NowCoordinate.y][NowCoordinate.x] = 'D';
+        if (abs(NowCoordinate.y - startAndend[0].y)+abs(NowCoordinate.x - startAndend[0].x)<(x+y)/2){
+            continue;
+        }
+        return map1;
+    }
 }
