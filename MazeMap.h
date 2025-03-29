@@ -4,21 +4,21 @@
 
 #include <vector>
 
-extern vector<vector<char>> map1;
+using namespace std;
 
 struct coordinate{
     int y = 0;
     int x = 0;
 };
 
-bool breakWall(int y, int x, int Cy, int Cx, vector<vector<char>>& map1, vector<coordinate>& changeFinish)
+bool breakWall(int y, int x, int Cy, int Cx, vector<vector<char>>& map1, vector<coordinate>& changeFinish);
 
-coordinate returnTolast(vector<coordinate> changeFinish, int times)
+coordinate returnTolast(vector<coordinate> changeFinish, int times);
 
-coordinate choose_start (int y)
+coordinate choose_start (int y);
 
-coordinate choose_end (int y, int x)
+coordinate choose_end (int y, int x);
 
-void Make_Map(int x, int y)
+vector<vector<char>> Make_Map(int x, int y);
 
 #endif
