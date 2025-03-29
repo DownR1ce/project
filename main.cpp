@@ -1,4 +1,4 @@
-#include "Map.h"
+#include "MazeMap.h"
 #include <iostream>
 
 using namespace std;
