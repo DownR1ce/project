@@ -4,16 +4,9 @@
 #include <random>
 #include <algorithm>
 #include <cmath>
+#include "Element.h"
 
 using namespace std;
-
-random_device rd;
-mt19937 gen(rd());
-
-struct coordinate{
-    int y = 0;
-    int x = 0;
-};
 
 //输入初始点，然后打破墙，然后寻路
 //第一个y和x是地图大小，cy和cx是坐标
@@ -156,6 +149,9 @@ vector<vector<char>> Make_Map(int x, int y){
         breakWall(y, x, startAndend[0].y, startAndend[0].x, map1, changeFinish);
         int a=0;
 
+        //储存可以用来放门的地方
+        vector<coordinate> Sihutong;
+
         while(true){
             int times=1;
             coordinate NowCoordinate = returnTolast(changeFinish, times);
@@ -164,6 +160,7 @@ vector<vector<char>> Make_Map(int x, int y){
             }//处理错误
 
             if (! breakWall(y, x, NowCoordinate.y, NowCoordinate.x, map1, changeFinish)){
+                Sihutong.push_back (NowCoordinate);
                 while(true){
                     times++;
                     if (NowCoordinate.y == -1 && NowCoordinate.x == -1){
@@ -191,9 +188,12 @@ vector<vector<char>> Make_Map(int x, int y){
         }
         coordinate NowCoordinate = returnTolast(changeFinish, 1);
         map1[NowCoordinate.y][NowCoordinate.x] = 'D';
-        if (abs(NowCoordinate.y - startAndend[0].y)+abs(NowCoordinate.x - startAndend[0].x)<(x+y)/2){
+        if (abs(NowCoordinate.y - startAndend[0].y)+abs(NowCoordinate.x - startAndend[0].x)<(x+y)/3){
             continue;
         }
+        add_door_for_small_game(map1, Sihutong, x, y);
+
+        add_mine (map1, changeFinish);
         return map1;
     }
 }
