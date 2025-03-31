@@ -6,7 +6,7 @@ using namespace std;
 int main(){
     int x,y;
     vector<vector<char>> map1;
-    cout<<"输入x和y构建迷宫(奇数)"<<endl;
+    cout<<"输入x和y构建迷宫(奇数 至少>7)"<<endl;
     cin >> x >> y;
     if (x%2==0||y%2==0){
         return 0;
