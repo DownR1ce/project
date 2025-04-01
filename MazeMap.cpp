@@ -1,12 +1,18 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
+#include <string>
 #include <random>
 #include <algorithm>
 #include <cmath>
 #include "Element.h"
 
 using namespace std;
+
+struct Maps{
+    vector<vector<char>> MazeMap_hide;
+    vector<vector<char>> MazeMap_show;
+};
 
 //输入初始点，然后打破墙，然后寻路
 //第一个y和x是地图大小，cy和cx是坐标
@@ -89,13 +95,15 @@ coordinate choose_end (int y, int x){
     return {end, x-2};
 }
 
+
 //确保x和y都为奇数
-vector<vector<char>> Make_Map(int x, int y){
+Maps Make_Map(int x, int y){
     while (true){
         vector<char> hang;
         vector<vector<char>> map1;
         vector<char> hang0 (x, '#');
         vector<char> bian (x, '@');
+        vector <vector <char>> Show_Map;
         for (int i = 0; i<x; i++){
             if(i%2==0){
                 hang.push_back('#');  
@@ -111,12 +119,15 @@ vector<vector<char>> Make_Map(int x, int y){
         for (int i = 0; i<y; i++){
             if (i==0 || i==(y-1)){
                 map1.push_back(bian);
+                Show_Map.push_back(bian);
             }
             else if (i%2==0){
                 map1.push_back(hang0);
+                Show_Map.push_back(hang0);
             }
             else if (i%2==1){
                 map1.push_back(hang);
+                Show_Map.push_back(hang);
             }
         }
         
@@ -147,7 +158,7 @@ vector<vector<char>> Make_Map(int x, int y){
         changeFinish.push_back(startAndend[1]);
 
         breakWall(y, x, startAndend[0].y, startAndend[0].x, map1, changeFinish);
-        int a=0;
+        int a=0; 
 
         //储存可以用来放门的地方
         vector<coordinate> Sihutong;
@@ -186,14 +197,23 @@ vector<vector<char>> Make_Map(int x, int y){
             }
             a++;
         }
+
         coordinate NowCoordinate = returnTolast(changeFinish, 1);
-        map1[NowCoordinate.y][NowCoordinate.x] = 'D';
         if (abs(NowCoordinate.y - startAndend[0].y)+abs(NowCoordinate.x - startAndend[0].x)<(x+y)/3){
             continue;
         }
+
+        //制作Show_Map
+        for(int i = 0; i<map1.size(); i++){
+            for(int j = 0; j < x; j++){
+                Show_Map[i][j] = map1[i][j];
+            }
+        }
+
+        map1[NowCoordinate.y][NowCoordinate.x] = 'D';
         add_door_for_small_game(map1, Sihutong, x, y);
 
         add_mine (map1, changeFinish);
-        return map1;
+        return {map1, Show_Map};
     }
 }
