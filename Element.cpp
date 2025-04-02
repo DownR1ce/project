@@ -3,16 +3,12 @@
 #include <random>
 #include <cmath>
 #include <algorithm>
+#include "player.h"
 
 using namespace std;
 
 random_device rd;
 mt19937 gen(rd());
-
-struct coordinate{
-    int y = 0;
-    int x = 0;
-};
 
 void add_door_for_small_game (vector <vector <char>>& map1, vector <coordinate> Sihutong, int x, int y){
     vector<int> door;
