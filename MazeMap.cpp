@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cmath>
 #include "Element.h"
+#include "player.h"
 
 using namespace std;
 
@@ -146,6 +147,7 @@ Maps Make_Map(int x, int y){
         //获取start 和 end 的坐标，用struct储存一下
         vector<coordinate> startAndend; 
         startAndend.push_back(choose_start(y));
+        Player_coordinate = startAndend[0];
         startAndend.push_back(choose_end(y,x));
 
         //使用"."来表示路
@@ -209,6 +211,7 @@ Maps Make_Map(int x, int y){
                 Show_Map[i][j] = map1[i][j];
             }
         }
+        Show_Map[startAndend[0].y][startAndend[0].x] = 'P';
 
         map1[NowCoordinate.y][NowCoordinate.x] = 'D';
         add_door_for_small_game(map1, Sihutong, x, y);
