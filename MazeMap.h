@@ -4,13 +4,9 @@
 
 #include <vector>
 #include <string>
+#include "player.h"
 
 using namespace std;
-
-struct coordinate{
-    int y = 0;
-    int x = 0;
-};
 
 struct Maps{
     vector<vector<char>> MazeMap_hide;
