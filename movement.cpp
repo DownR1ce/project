@@ -38,7 +38,7 @@ void player_movement (string order, Maps& maps){
             maps.MazeMap_show[maybe.y][maybe.x] = 'D';
         }
     }
-    else{
+    if (maps.MazeMap_show[maybe.y][maybe.x] == '#' || maps.MazeMap_show[maybe.y][maybe.x] == '@'){
         cout << "不能撞墙" << endl;
     }
     return;
