@@ -6,6 +6,6 @@
 #include "player.h"
 #include "MazeMap.h"
 
-void player_movement (string order, Maps& maps);
+string player_movement (string order, Maps& maps);
 
 #endif
