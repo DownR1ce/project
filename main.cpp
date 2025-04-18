@@ -2,7 +2,9 @@
 #include "player.h"
 #include "movement.h"
 #include <string>
+#include <vector>
 #include <iostream>
+#include "utils.h"
 
 using namespace std;
 
@@ -22,14 +24,20 @@ int main(){
         }
         cout<<endl;
     } 
+
+    vector <string> Map_Output_vector;
+
     for(int i = 0; i<maps.MazeMap_show.size(); i++){
+        string output = "";
         for(int j = 0; j < x; j++){
-            cout << maps.MazeMap_show[i][j];
+            output += maps.MazeMap_show[i][j];
         }
-        cout<<endl;
+        Map_Output_vector.push_back (output);
     } 
+    printCentered(Map_Output_vector);
     while(true){
         string order;
+        string tips;
         cout << "please enter 'wasd' to control player" << endl;
         cin >> order;
         cout << "\033[2J\033[H";
@@ -37,14 +45,18 @@ int main(){
             break;
         }
         if (order == "w" || order == "s" || order == "a" || order == "d"){
-            player_movement(order, maps);
+            tips = player_movement(order, maps);
         }
+        vector <string> Map_Output_vector;
         for(int i = 0; i<maps.MazeMap_show.size(); i++){
+            string output = "";
             for(int j = 0; j < x; j++){
-                cout << maps.MazeMap_show[i][j];
+                output += maps.MazeMap_show[i][j];
             }
-            cout<<endl;
-        }
+            Map_Output_vector.push_back (output);
+        } 
+        printCentered(Map_Output_vector);
+        cout << tips << endl;
     }
     return 0;
 }
