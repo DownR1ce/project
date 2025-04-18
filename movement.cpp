@@ -3,7 +3,7 @@
 #include "player.h"
 #include "MazeMap.h"
 
-void player_movement (string order, Maps& maps){
+string player_movement (string order, Maps& maps){
     coordinate maybe;
     if (order == "w"){
         maybe = {Player_coordinate.y - 1 , Player_coordinate.x};
@@ -17,6 +17,7 @@ void player_movement (string order, Maps& maps){
     if (order == "d"){
         maybe = {Player_coordinate.y, Player_coordinate.x + 1};
     }
+    string tips;
     if (maps.MazeMap_show[maybe.y][maybe.x] != '#' || maps.MazeMap_show[maybe.y][maybe.x] != '@'){
         if (maps.MazeMap_hide[maybe.y][maybe.x] == '.' || maps.MazeMap_hide[maybe.y][maybe.x] == 'S'){
             maps.MazeMap_show [Player_coordinate.y][Player_coordinate.x] = '.';
@@ -24,22 +25,22 @@ void player_movement (string order, Maps& maps){
             maps.MazeMap_show[maybe.y][maybe.x] = 'P';
         }
         if (maps.MazeMap_hide[maybe.y][maybe.x] == 'X'){
-            cout<< "你踩到了炸弹" << endl;
+            tips = "你踩到了炸弹";
             maps.MazeMap_show [Player_coordinate.y][Player_coordinate.x] = '.';
             Player_coordinate = maybe;
             maps.MazeMap_show[maybe.y][maybe.x] = 'X';
         }
         if (maps.MazeMap_hide[maybe.y][maybe.x] == '?'){
-            cout << "你找到了神秘的门, 按e进入" << endl;
+            tips = "你找到了神秘的门, 按e进入";
             maps.MazeMap_show[maybe.y][maybe.x] = '?';
         }
         if (maps.MazeMap_hide[maybe.y][maybe.x] == 'D'){
-            cout << "你找到了出口，但是钥匙呢？\n 摁e开锁" << endl;
+            tips = "你找到了出口，但是钥匙呢？\n 摁e开锁";
             maps.MazeMap_show[maybe.y][maybe.x] = 'D';
         }
     }
-    if (maps.MazeMap_show[maybe.y][maybe.x] == '#' || maps.MazeMap_show[maybe.y][maybe.x] == '@'){
-        cout << "不能撞墙" << endl;
+    else{
+        tips = "不能撞墙";
     }
-    return;
+    return tips;
 }
