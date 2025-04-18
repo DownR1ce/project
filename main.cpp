@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include "utils.h"
+#include "SmallGame.h"
 
 using namespace std;
 
@@ -12,6 +13,7 @@ int main(){
     int x,y;
     cout<<"输入x和y构建迷宫(奇数)"<<endl;
     cin >> x >> y;
+    getHeart();
     cout << "\033[2J\033[H";
     if (x%2==0||y%2==0){
         return 0;
@@ -41,7 +43,7 @@ int main(){
         cout << "please enter 'wasd' to control player" << endl;
         cin >> order;
         cout << "\033[2J\033[H";
-        if (order == "e"){
+        if (order == "q"){
             break;
         }
         if (order == "w" || order == "s" || order == "a" || order == "d"){
@@ -57,6 +59,20 @@ int main(){
         } 
         printCentered(Map_Output_vector);
         cout << tips << endl;
+        
+        //神秘の门
+        if (tips == "你找到了神秘的门, 按e进入"){
+            char o;
+            cin >> o;
+            if (o=='e'){
+                JiaZhuangTaShiYiGeYouXi ();
+            }
+        }
+
+        if (player_heart == 0){
+            cout << "game over, 你死了" << endl;
+            break;
+        }
     }
     return 0;
 }
