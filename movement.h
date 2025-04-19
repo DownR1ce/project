@@ -7,5 +7,7 @@
 #include "MazeMap.h"
 
 string player_movement (string order, Maps& maps);
+int have_mine (Maps maps);
+bool TongGuan(char O);
 
 #endif
