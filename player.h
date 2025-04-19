@@ -17,6 +17,7 @@ extern int number_of_mineSweeping; //玩家有限的扫雷次数
 extern vector <string> player_inventory; //特殊道具的储存空间
 extern int number_of_key; //玩家获取的钥匙数量
 extern coordinate Player_coordinate; //玩家的坐标
+extern int XuYaoDe_number_of_key; // 需要通关的钥匙数量
 void getHeart();
 
 
