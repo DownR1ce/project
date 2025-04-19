@@ -3,6 +3,101 @@
 #include "player.h"
 #include "MazeMap.h"
 
+
+int have_mine (Maps maps){
+    int number = 0;
+    if (maps.MazeMap_hide[Player_coordinate.y][(Player_coordinate.x-1)] == 'X'){
+        number ++;
+    }
+    if (maps.MazeMap_hide[Player_coordinate.y][(Player_coordinate.x+1)] == 'X'){
+        number ++;
+    }
+    if (maps.MazeMap_hide[Player_coordinate.y-1][(Player_coordinate.x-1)] == 'X'){
+        number ++;
+    }
+    if (maps.MazeMap_hide[Player_coordinate.y-1][(Player_coordinate.x+1)] == 'X'){
+        number ++;
+    }
+    if (maps.MazeMap_hide[Player_coordinate.y-1][(Player_coordinate.x)] == 'X'){
+        number ++;
+    }
+    if (maps.MazeMap_hide[Player_coordinate.y+1][(Player_coordinate.x-1)] == 'X'){
+        number ++;
+    }
+    if (maps.MazeMap_hide[Player_coordinate.y+1][(Player_coordinate.x+1)] == 'X'){
+        number ++;
+    }
+    if (maps.MazeMap_hide[Player_coordinate.y+1][(Player_coordinate.x)] == 'X'){
+        number ++;
+    }
+    if (maps.MazeMap_hide[Player_coordinate.y][(Player_coordinate.x+1)] != '@'){
+        if (maps.MazeMap_hide[Player_coordinate.y][(Player_coordinate.x+2)] == 'X'){
+            number ++;
+        }
+        if (maps.MazeMap_hide[Player_coordinate.y-1][(Player_coordinate.x+2)] == 'X'){
+            number ++;
+        }
+        if (maps.MazeMap_hide[Player_coordinate.y+1][(Player_coordinate.x+2)] == 'X'){
+            number ++;
+        }
+    }
+    if (maps.MazeMap_hide[Player_coordinate.y][(Player_coordinate.x-1)] != '@'){
+        if (maps.MazeMap_hide[Player_coordinate.y][(Player_coordinate.x-2)] == 'X'){
+            number ++;
+        }
+        if (maps.MazeMap_hide[Player_coordinate.y-1][(Player_coordinate.x-2)] == 'X'){
+            number ++;
+        }
+        if (maps.MazeMap_hide[Player_coordinate.y+1][(Player_coordinate.x-2)] == 'X'){
+            number ++;
+        }
+    }
+    if (maps.MazeMap_hide[Player_coordinate.y-1][(Player_coordinate.x)] != '@'){
+        if (maps.MazeMap_hide[Player_coordinate.y-2][(Player_coordinate.x+1)] == 'X'){
+            number ++;
+        }
+        if (maps.MazeMap_hide[Player_coordinate.y-2][(Player_coordinate.x)] == 'X'){
+            number ++;
+        }
+        if (maps.MazeMap_hide[Player_coordinate.y-2][(Player_coordinate.x-1)] == 'X'){
+            number ++;
+        }
+        if (maps.MazeMap_hide[Player_coordinate.y][(Player_coordinate.x+1)] != '@'){
+            if (maps.MazeMap_hide[Player_coordinate.y-2][(Player_coordinate.x+2)] == 'X'){
+                number ++;
+            }
+        }
+        if (maps.MazeMap_hide[Player_coordinate.y][(Player_coordinate.x-1)] != '@'){
+            if (maps.MazeMap_hide[Player_coordinate.y-2][(Player_coordinate.x-2)] == 'X'){
+                number ++;
+            }
+        }
+    }
+    if (maps.MazeMap_hide[Player_coordinate.y+1][(Player_coordinate.x)] != '@'){
+        if (maps.MazeMap_hide[Player_coordinate.y+2][(Player_coordinate.x+1)] == 'X'){
+            number ++;
+        }
+        if (maps.MazeMap_hide[Player_coordinate.y+2][(Player_coordinate.x)] == 'X'){
+            number ++;
+        }
+        if (maps.MazeMap_hide[Player_coordinate.y+2][(Player_coordinate.x-1)] == 'X'){
+            number ++;
+        }
+        if (maps.MazeMap_hide[Player_coordinate.y][(Player_coordinate.x+1)] != '@'){
+            if (maps.MazeMap_hide[Player_coordinate.y+2][(Player_coordinate.x+2)] == 'X'){
+                number ++;
+            }
+        }
+        if (maps.MazeMap_hide[Player_coordinate.y][(Player_coordinate.x-1)] != '@'){
+            if (maps.MazeMap_hide[Player_coordinate.y+2][(Player_coordinate.x-2)] == 'X'){
+                number ++;
+            }
+        }
+    }
+    
+    return number;
+}
+
 string player_movement (string order, Maps& maps){
     coordinate maybe;
     if (order == "w"){
@@ -45,4 +140,20 @@ string player_movement (string order, Maps& maps){
         tips = "不能撞墙";
     }
     return tips;
+}
+
+bool TongGuan(char O){
+    if(O == 'e'){
+        if (number_of_key == XuYaoDe_number_of_key){
+            cout << "恭喜你成功的出去了" << endl;
+            return true;
+        }
+        else{
+            cout << "抱歉你的钥匙不够" << endl;
+            return false;
+        }
+    }
+    else{
+        return false;
+    }
 }
