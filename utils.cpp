@@ -36,13 +36,13 @@ pair<int, int> getTerminalSize() {
 void printCentered(const vector<string>& lines) {
     pair<int, int> terminalSize = getTerminalSize();
     int termWidth = terminalSize.first;
-    int termHeight = terminalSize.second;
+    int termHeight = (terminalSize.second);
     
     // 计算垂直方向的空行数
-    int verticalPadding = ((termHeight - lines.size()) / 2)-5;
-    verticalPadding = max(0, verticalPadding);
+    int verticalPadding = ((termHeight - lines.size()) / 2);
+    verticalPadding = (max(0, verticalPadding));
     // 打印上方空行
-    for (int i = 0; i < verticalPadding; ++i) {
+    for (int i = 0; i < verticalPadding-10; ++i) {
         cout << endl;
     }
     
@@ -54,4 +54,153 @@ void printCentered(const vector<string>& lines) {
         
         cout << string(horizontalPadding, ' ') << line << endl;
     }
+}
+
+void printFor_digitNumber(const vector<string>& lines) {
+    pair<int, int> terminalSize = getTerminalSize();
+    int termWidth = terminalSize.first;
+    int termHeight = terminalSize.second;
+
+    int verticalPadding = ((termHeight - lines.size()) / 2);
+    verticalPadding = (max(0, verticalPadding));
+    // 打印上方空行
+    for (int i = 0; i < verticalPadding-12; ++i) {
+        cout << endl;
+    }
+
+    // 水平居中
+
+    for (const auto& line : lines) {
+        int horizontalPadding = (((termWidth - line.length()) / 2)+47);
+        horizontalPadding = max(0, horizontalPadding);
+        
+        cout << string(horizontalPadding, ' ') << line << endl;
+    }
+}
+
+void Print_Number (int number){
+    vector<vector<string>> digits = {
+        //0
+        {
+            " *** ",
+            "*   *",
+            "*   *",
+            "*   *",
+            " *** "
+        },
+        //1
+        {
+            "  *  ",
+            " **  ",
+            "  *  ",
+            "  *  ",
+            " *** "
+        },
+        //2
+        {
+            " *** ",
+            "    *",
+            "  ** ",
+            " *   ",
+            "*****"
+        },
+        //3
+        {
+            "**** ",
+            "    *",
+            " *** ",
+            "    *",
+            "**** "
+        },
+        //4
+        {
+            "*   *",
+            "*   *",
+            "*****",
+            "    *",
+            "    *"
+        },
+        //5
+        {
+            "*****",
+            "*    ",
+            "**** ",
+            "    *",
+            "**** "
+        },
+        //6
+        {
+            " *** ",
+            "*    ",
+            "**** ",
+            "*   *",
+            " *** "
+        },
+        //7
+        {
+            "*****",
+            "    *",
+            "   * ",
+            "  *  ",
+            " *   "
+        },
+        //8
+        {
+            " *** ",
+            "*   *",
+            " *** ",
+            "*   *",
+            " *** "
+        },
+        //9
+        {
+            " *** ",
+            "*   *",
+            " ****",
+            "    *",
+            " *** "
+        },
+        //10
+        {
+            "  *  *** ",
+            " ** *   *",
+            "  * *   *",
+            "  * *   *",
+            " *** *** "
+        },
+        //11
+        {
+            "  *   * ",
+            " **  ** ",
+            "  *   * ",
+            "  *   * ",
+            " *** ***"
+        },
+        //12
+        {
+            "  *  *** ",
+            " **     *",
+            "  *   ** ",
+            "  *  *   ",
+            " *** ****"
+        },
+        //13
+        {
+            "  * **** ",
+            " **     *",
+            "  *  *** ",
+            "  *     *",
+            " *** ****"
+        },
+        //14
+        {
+            "  * *   *",
+            " ** *   *",
+            "  * *****",
+            "  *     *",
+            " ***     *"
+        }
+    };
+    digits[number].emplace(digits[number].begin(), "       角色周围5*5的炸弹数量(x*y):");
+    printFor_digitNumber(digits[number]);
 }
