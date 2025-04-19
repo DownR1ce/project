@@ -20,4 +20,5 @@ void getHeart(){
 vector <string> player_inventory (1 , "nothing");
 int number_of_mineSweeping = 0;
 int number_of_key = 0;
+int XuYaoDe_number_of_key = 0;
 coordinate Player_coordinate {0, 0};
