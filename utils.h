@@ -10,5 +10,6 @@ using namespace std;
 
 pair<int, int> getTerminalSize();
 void printCentered(const vector<string>& lines);
+void Print_Number (int number);
 
 #endif
