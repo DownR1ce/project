@@ -37,6 +37,9 @@ int main(){
         Map_Output_vector.push_back (output);
     } 
     printCentered(Map_Output_vector);
+    int Mine_Number = have_mine (maps);
+    Print_Number (Mine_Number);
+
     while(true){
         string order;
         string tips;
@@ -57,8 +60,12 @@ int main(){
             }
             Map_Output_vector.push_back (output);
         } 
+
         printCentered(Map_Output_vector);
         cout << tips << endl;
+
+        int Mine_Number = have_mine (maps);
+        Print_Number (Mine_Number);
         
         //神秘の门
         if (tips == "你找到了神秘的门, 按e进入"){
@@ -66,6 +73,15 @@ int main(){
             cin >> o;
             if (o=='e'){
                 JiaZhuangTaShiYiGeYouXi ();
+            }
+        }
+
+        //出去の门
+        if (tips == "你找到了出口，但是钥匙呢？\n 摁e开锁"){
+            char O;
+            cin >> O;
+            if (TongGuan(O)){
+                break;
             }
         }
 
