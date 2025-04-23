@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <cmath>
 #include "utils.h"
 #include "SmallGame.h"
 
@@ -20,6 +21,7 @@ int main(){
     }
     Maps maps = Make_Map(x, y);
     //测试部分
+    number_of_mineSweeping = floor(number_of_mine / 0.8);
     for(int i = 0; i<maps.MazeMap_hide.size(); i++){
         for(int j = 0; j < x; j++){
             cout << maps.MazeMap_hide[i][j];
@@ -41,6 +43,8 @@ int main(){
     Print_Number (Mine_Number);
 
     while(true){
+        cout << "number of mine remain: "<< number_of_mine << endl;
+        cout << "number of mine sweeping remain: " <<  number_of_mineSweeping << endl;
         string order;
         string tips;
         cout << "please enter 'wasd' to control player" << endl;
@@ -51,6 +55,9 @@ int main(){
         }
         if (order == "w" || order == "s" || order == "a" || order == "d"){
             tips = player_movement(order, maps);
+        }
+        if (order == "m"){
+            Saolei(order, maps);
         }
         vector <string> Map_Output_vector;
         for(int i = 0; i<maps.MazeMap_show.size(); i++){
