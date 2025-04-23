@@ -19,6 +19,7 @@ void add_door_for_small_game (vector <vector <char>>& map1, vector <coordinate> 
     if (x >= 25 || y >= 25){
         doors ++;
     }
+    XuYaoDe_number_of_key = doors;
     for (int i = 0; i<doors; i++){
         door.push_back(dis(gen));
     }
@@ -30,6 +31,7 @@ void add_door_for_small_game (vector <vector <char>>& map1, vector <coordinate> 
 
 void add_mine (vector <vector <char>>& map1, vector <coordinate> changeFinish){
     int numberOfMine = changeFinish.size() / 6;
+    number_of_mine = numberOfMine;
     uniform_int_distribution<> dis(0, changeFinish.size()-1);
     int a;
     vector <int> Mine_coordinate;
