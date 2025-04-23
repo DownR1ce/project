@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <cmath>
 #include "player.h"
 #include "MazeMap.h"
 
@@ -114,13 +115,24 @@ string player_movement (string order, Maps& maps){
     }
     string tips;
     if (maps.MazeMap_show[maybe.y][maybe.x] != '#' || maps.MazeMap_show[maybe.y][maybe.x] != '@'){
-        if (maps.MazeMap_hide[maybe.y][maybe.x] == '.' || maps.MazeMap_hide[maybe.y][maybe.x] == 'S'){
+        if (maps.MazeMap_hide[maybe.y][maybe.x] == '.' || maps.MazeMap_hide[maybe.y][maybe.x] == 'S' || maps.MazeMap_hide[maybe.y][maybe.x] == 'O'){
+            if (maps.MazeMap_hide[Player_coordinate.y][Player_coordinate.x] == '.' || maps.MazeMap_hide[Player_coordinate.y][Player_coordinate.x] == 'S'){
+                maps.MazeMap_show [Player_coordinate.y][Player_coordinate.x] = '.';
+                Player_coordinate = maybe;
+                maps.MazeMap_show[maybe.y][maybe.x] = 'P';
+            }
+            if (maps.MazeMap_hide[Player_coordinate.y][Player_coordinate.x] == 'O'){
+                maps.MazeMap_show [Player_coordinate.y][Player_coordinate.x] = 'O';
+                Player_coordinate = maybe;
+                maps.MazeMap_show[maybe.y][maybe.x] = 'P';
+            }
             maps.MazeMap_show [Player_coordinate.y][Player_coordinate.x] = '.';
             Player_coordinate = maybe;
             maps.MazeMap_show[maybe.y][maybe.x] = 'P';
         }
         if (maps.MazeMap_hide[maybe.y][maybe.x] == 'X'){
             tips = "你踩到了炸弹, -1生命值";
+            number_of_mine -= 1;
             maps.MazeMap_show [Player_coordinate.y][Player_coordinate.x] = '.';
             Player_coordinate = maybe;
             maps.MazeMap_show[maybe.y][maybe.x] = 'X';
@@ -157,3 +169,52 @@ bool TongGuan(char O){
         return false;
     }
 }
+
+void Saolei(string order, Maps& map){
+    int numberofmine = 0;
+    number_of_mineSweeping -= 1;
+    if(order == "m"){
+        if (map.MazeMap_hide[Player_coordinate.y][Player_coordinate.x + 1] == 'X'){
+            map.MazeMap_hide[Player_coordinate.y][Player_coordinate.x + 1]='O';
+            map.MazeMap_show[Player_coordinate.y][Player_coordinate.x + 1]='O';
+            numberofmine++;
+        }
+        if (map.MazeMap_hide[Player_coordinate.y][Player_coordinate.x - 1] == 'X'){
+            map.MazeMap_hide[Player_coordinate.y][Player_coordinate.x - 1]='O';
+            map.MazeMap_show[Player_coordinate.y][Player_coordinate.x - 1]='O';
+            numberofmine++;
+        }
+        if (map.MazeMap_hide[Player_coordinate.y + 1][Player_coordinate.x + 1] == 'X'){
+            map.MazeMap_hide[Player_coordinate.y + 1][Player_coordinate.x + 1]='O';
+            map.MazeMap_show[Player_coordinate.y + 1][Player_coordinate.x + 1]='O';
+            numberofmine++;
+        }
+        if (map.MazeMap_hide[Player_coordinate.y + 1][Player_coordinate.x - 1] == 'X'){
+            map.MazeMap_hide[Player_coordinate.y + 1][Player_coordinate.x - 1]='O';
+            map.MazeMap_show[Player_coordinate.y + 1][Player_coordinate.x - 1]='O';
+            numberofmine++;
+        }
+        if (map.MazeMap_hide[Player_coordinate.y + 1][Player_coordinate.x] == 'X'){
+            map.MazeMap_hide[Player_coordinate.y + 1][Player_coordinate.x]='O';
+            map.MazeMap_show[Player_coordinate.y + 1][Player_coordinate.x]='O';
+            numberofmine++;
+        } 
+        if (map.MazeMap_hide[Player_coordinate.y - 1][Player_coordinate.x + 1] == 'X'){
+            map.MazeMap_hide[Player_coordinate.y - 1][Player_coordinate.x + 1]='O';
+            map.MazeMap_show[Player_coordinate.y - 1][Player_coordinate.x + 1]='O';
+            numberofmine++;
+        }
+        if (map.MazeMap_hide[Player_coordinate.y - 1][Player_coordinate.x - 1] == 'X'){
+            map.MazeMap_hide[Player_coordinate.y - 1][Player_coordinate.x - 1]='O';
+            map.MazeMap_show[Player_coordinate.y - 1][Player_coordinate.x - 1]='O';
+            numberofmine++;
+        }
+        if (map.MazeMap_hide[Player_coordinate.y - 1][Player_coordinate.x] == 'X'){
+            map.MazeMap_hide[Player_coordinate.y - 1][Player_coordinate.x]='O';
+            map.MazeMap_show[Player_coordinate.y - 1][Player_coordinate.x]='O';
+            numberofmine++;
+        } 
+        number_of_mine -= numberofmine;
+    }
+}
+
