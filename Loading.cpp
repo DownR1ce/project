@@ -62,7 +62,8 @@ void loading() {
     cin.ignore();
 }
 
-/* The main function here is left for testing and debugging if necessary.
+/* 
+The main function here is left for testing and debugging if necessary.
 int main() {
     loading();
     return 0;
