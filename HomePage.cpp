@@ -1,1 +1,58 @@
+#include <iostream>
+#include <fstream>
+#include <unistd.h>
+using namespace std;
 
+void DisplayTitle() {
+    string line;
+    ifstream fin;
+    fin.open("GameTitle.txt");
+    while (getline(fin, line)){
+        cout << line << endl;
+        usleep(250000);
+    }
+    cout << "\033[32m-Welcome to Terminal Intruder! The maze has been waiting for you-\033[0m" << endl;
+    cout << endl;
+    fin.close();
+}
+
+void GameChoice() {
+    cout << "\033[46mN\033[0m: New Game" << endl;
+    cout << "\033[44mS\033[0m: Saved Game" << endl;
+    cout << "\033[30;47mT\033[0m: Helpful Tips" << endl;
+    cout << "\033[43mQ\033[0m: Quit" << endl;
+    
+    cout << endl << "\033[3mWhere do you want to start your adventure?\033[0m" << endl;
+    cout << endl << "\033[2mChoices are case-insensitive: Both 'N' and 'n' are fine.\033[0m" << endl;
+    cout << endl;
+} 
+
+void HomePage(){
+    DisplayTitle();
+    GameChoice();
+
+    char choice; 
+    cin >> choice;
+    
+    while (choice != 'Q' && choice != 'q') {
+        if (choice == 'N' || choice == 'n') {
+            // links to new game
+        } else if (choice == 'S' || choice == 's') {
+            // links to saved game
+        } else if (choice == 'T' || choice == 't') {
+            // links to tips
+        } else {
+            cout << "Invalid starting point. Please try again." << endl;
+        }
+        cin >> choice;
+    }
+    
+    cout << "Hope to See You Soon!" << endl;
+}
+
+/* The function is left here for testing or debugging if necessary
+int main() {
+    HomePage();
+    return 0;
+}
+*/
