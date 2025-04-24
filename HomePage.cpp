@@ -50,7 +50,7 @@ void HomePage(){
         cin >> choice;
     }
     
-    cout << "Hope to See You Soon!" << endl;
+    cout << endl << "\033[3mHope to See You Soon!\033[0m" << endl;
 }
 
 /* The function is left here for testing or debugging if necessary
