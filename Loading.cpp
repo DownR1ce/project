@@ -58,7 +58,7 @@ void loading() {
     }
     clear_screen();
     cout << "\033[32m-Loading Completed-\033[0m" << endl;
-    cout << endl << "\033[5m-Press Enter To Start The Game-\033[0m" << endl;
+    cout << endl << "\033[5m-Press Enter to Start the Game-\033[0m" << endl;
     cin.ignore();
 }
 
