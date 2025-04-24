@@ -54,7 +54,7 @@ void loading() {
         }
         cout << "] " << i << "%";
         cout.flush();
-        sleep(1);
+        usleep(250000);
     }
     clear_screen();
     cout << "\033[32m-Loading Completed-\033[0m" << endl;
