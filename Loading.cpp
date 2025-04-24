@@ -1,14 +1,18 @@
 #include <iostream>
-#include <string>
-#include <unistd.h>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
+#include <windows.h> 
+#include <conio.h>   
+#include <cstdlib>   
+#include <ctime>    
+
 using namespace std;
 
-// Clear excessive progress bar
-void clear_screen() {
-    system("clear");
+void setColor(int color) {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+}
+
+void initConsole() {
+    system("mode con cols=60 lines=30");
+    system("cls");
 }
 
 // Provide random tips for players to kill time while they're waiting
@@ -33,33 +37,39 @@ string random_tips() {
 }
 
 // Main body of the loading process
-void loading() {
-    string tip = random_tips();
-    cout << "\033[5;32mLoading...\033[0m" << endl;
-    
-    for (int i = 0; i <= 100; i += 10) {
-        clear_screen();
-        
-        cout << "\033[5;32mLoading...\033[0m" << endl;
-        cout << endl << tip << endl;
-        cout << endl;
-        
-        cout << "[";
-        for (int j = 0; j < 10; ++j) {
-            if (j < i/10) {
-                cout << "=";
-            } else {
-                cout << " ";
-            }
-        }
-        cout << "] " << i << "%";
-        cout.flush();
-        usleep(250000);
+void showLoadingBar() {
+    setColor(8); // Gray
+    cout << "[";
+    for (int i = 0; i < 20; i++) {
+        setColor(10 + (i % 2)); // Blinking green
+        cout << "■";
+        Sleep(50 + rand() % 100);
     }
-    clear_screen();
-    cout << "\033[32m-Loading Completed-\033[0m" << endl;
-    cout << endl << "\033[5m-Press Enter to Start the Game-\033[0m" << endl;
-    cin.ignore();
+    setColor(8);
+    cout << "]" << endl;
+    setColor(7); // White
+}
+void showLoadingScreen() {
+    initConsole();
+    srand(time(0));
+    
+    setColor(11);
+    cout << "\n\n Preparing maze adventure...\n\n";
+    
+    showLoadingBar();
+    
+    setColor(14);
+    cout << "\n Loading complete!\n";
+    Sleep(500);
+    
+    setColor(7);
+    cout << "\n Press any key to continue...";
+    _getch();
+}
+
+int main() {
+    showLoadingScreen();
+    return 0;
 }
 
 /* 
