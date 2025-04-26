@@ -212,7 +212,7 @@ vector <int> getXY(){
     cout << "\033[2J\033[H";
     if (diff == '1'){
         player_heart = 3;
-        return {9, 9};
+        return {11, 11};
     }
     else if(diff == '2'){
         player_heart = 5;
