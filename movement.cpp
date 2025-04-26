@@ -172,6 +172,7 @@ bool TongGuan(char O){
 
 void Saolei(string order, Maps& map){
     if(number_of_mineSweeping == 0){
+        cout << "sorry, you cannot sweep mine anmymore!!"<<endl;
         return;
     }
     int numberofmine = 0;
