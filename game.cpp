@@ -7,7 +7,7 @@
 #include <cmath>
 #include "utils.h"
 #include "SmallGame.h"
-#include "home.h"
+#include "Home.h"
 #ifdef _WIN32
     #include <windows.h>
     #define SLEEP(ms) Sleep(ms)
