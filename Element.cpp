@@ -50,5 +50,6 @@ void add_mine (vector <vector <char>>& map1, vector <coordinate> changeFinish){
     for(int i = 0; i < numberOfMine; i++){
         map1[changeFinish[Mine_coordinate[i]].y][changeFinish[Mine_coordinate[i]].x] = 'X';//X用来表示雷
     }
+    number_of_mineSweeping = round(numberOfMine/0.8);
     return;
 }
