@@ -171,7 +171,7 @@ bool TongGuan(char O){
 }
 
 void Saolei(string order, Maps& map){
-    if(number_of_mineSweeping >0){
+    if(number_of_mineSweeping == 0){
         return;
     }
     int numberofmine = 0;
