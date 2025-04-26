@@ -5,6 +5,9 @@
 #include <unistd.h>
 #include <vector>
 #include <string>
+#include "player.h"
+#include "game.h"
+#include "utils.h"
 #ifdef _WIN32
     #include <windows.h>
     #include <conio.h>
@@ -40,9 +43,9 @@ void DisplayTitle() {
         cout << line << endl;
         usleep(250000);
     }
-    cout << "\033[32m-Welcome to Terminal Intruder! The maze has been waiting for you-\033[0m" << endl;
-    cout << endl;
+    cout << "\033[32m-Welcome to Terminal Intruder! The maze has been waiting for you-\033[0m" << endl << endl;
     fin.close();
+    SLEEP(3000); 
 }
 
 // Four options in the home page
@@ -61,19 +64,39 @@ void GameChoice() {
 void HomePage(){
     DisplayTitle();
     GameChoice();
+    string line;
+    ifstream fin;
+    bool sta;
 
     char choice; 
     cin >> choice;
-    
     while (choice != 'Q' && choice != 'q') {
+        CLEAR_SCREEN();
+        fin.open("GameTitle.txt");
+        while (getline(fin, line)){
+            cout << line << endl;
+        }
+        cout << "\033[32m-Welcome to Terminal Intruder! The maze has been waiting for you-\033[0m" << endl << endl;
+        fin.close();
+        GameChoice();
         if (choice == 'N' || choice == 'n') {
-            // links to new game
+            sta = game();
         } else if (choice == 'S' || choice == 's') {
             // links to saved game
         } else if (choice == 'T' || choice == 't') {
             // links to tips
         } else {
             cout << "Invalid starting point. Please try again." << endl;
+        }
+        if (sta){
+            fin.open("GameTitle.txt");
+            while (getline(fin, line)){
+                cout << line << endl;
+            }
+            cout << "\033[32m-Welcome to Terminal Intruder! The maze has been waiting for you-\033[0m" << endl << endl;
+            fin.close();
+            GameChoice();
+            sta=false;
         }
         cin >> choice;
     }
@@ -147,10 +170,82 @@ void showLoadingScreen() {
     setColor(7);
     cout << "\n Press any key to continue...";
     GETCH();
+
+    CLEAR_SCREEN();
 }
 
-int main() {
-    showLoadingScreen();
-    HomePage();
-    return 0;
+char chooseDifficulty(){
+    pair<int, int> terminalSize = getTerminalSize();
+    int termWidth = terminalSize.first;
+    string space(termWidth, ' ');
+    string space1((termWidth-7)/2, ' ');
+    string space2((termWidth-9)/2, ' ');
+    string space3((termWidth-14)/2, ' ');
+    cout<<"\033[42m"<<space<<space1<<"Esay: e"<<space1<<space<<"\033[0m" << "\033[43m"<<space<<space2<<"Normal: n"<<space2<<space<<"\033[0m" << "\033[41m"<<space<<space1<<"Hard: h"<<space1<<space<<"\033[0m" <<"\033[44m"<<space<<space3<<"Free choice: f"<<space3<<space<<"\033[0m"<<"\n\n"<<space<<"Quit: q"<<endl;
+    string diff;
+    cin >> diff;
+    if(diff == "e"){
+        return '1';
+    }
+    else if(diff == "n"){
+        return '2';
+    }
+    else if(diff == "h"){
+        return '3';
+    }
+    else if(diff == "f"){
+        return '4';
+    }
+    else if(diff == "q"){
+        return '5';
+    }
+    else{
+        cout << "Invalid input, please try again." << endl;
+        CLEAR_SCREEN(); 
+        return chooseDifficulty();
+    }
+}
+
+vector <int> getXY(){
+    cout << "\033[2J\033[H";
+    int diff = chooseDifficulty();
+    cout << "\033[2J\033[H";
+    if (diff == '1'){
+        player_heart = 3;
+        return {9, 9};
+    }
+    else if(diff == '2'){
+        player_heart = 5;
+        return {15, 15};
+    }
+    else if(diff == '3'){
+        player_heart = 8;
+        return {31, 19};
+    }
+    else if(diff == '4'){
+        int x,y;
+        while (true){
+            cout<<"Please enter the size you want to challenge, please both bigger than 7(x(max:131)and y(max:21))\nONLY OOD!!!!!!!"<<endl;
+            cin >> x >> y;
+            if (x%2==0||y%2==0||x<7||y<7||y>21||x>131){
+                cout << "\033[2J\033[H";
+                cout << "you can just enter odd number and bigger than 7, please try again!" << endl;
+                continue;
+            }
+            break;
+        }
+        cout << "please enter your heart number" << endl;
+        getHeart();
+        cout << "\033[2J\033[H";
+        return {x,y};
+    }
+    else if(diff == '5'){
+        CLEAR_SCREEN(); 
+        return {100000, 100000};
+    }
+    else{
+        cout << "Invalid input, please try again." << endl;
+        CLEAR_SCREEN(); 
+        return getXY();
+    }
 }
