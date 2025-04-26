@@ -7,28 +7,28 @@
 #include <cmath>
 #include "utils.h"
 #include "SmallGame.h"
+#include "home.h"
+#ifdef _WIN32
+    #include <windows.h>
+    #define SLEEP(ms) Sleep(ms)
+#else
+    #include <unistd.h>
+    #define SLEEP(ms) usleep(ms * 1000)
+#endif
 
 using namespace std;
 
-int main(){
+bool game(){
+    vector <int> xy = getXY();
     int x,y;
-    cout<<"输入x和y构建迷宫(奇数)"<<endl;
-    cin >> x >> y;
-    getHeart();
-    cout << "\033[2J\033[H";
-    if (x%2==0||y%2==0){
-        return 0;
+    x= xy[0];
+    y= xy[1];
+    if (x==100000 && y==100000){
+        return true;
     }
     Maps maps = Make_Map(x, y);
-    //测试部分
-    number_of_mineSweeping = floor(number_of_mine / 0.8);
-    for(int i = 0; i<maps.MazeMap_hide.size(); i++){
-        for(int j = 0; j < x; j++){
-            cout << maps.MazeMap_hide[i][j];
-        }
-        cout<<endl;
-    } 
-
+    cout << "the map size is "<<x<<" * "<<y<<", please ready to play!!!"<<endl; 
+    SLEEP(5000);
     vector <string> Map_Output_vector;
 
     for(int i = 0; i<maps.MazeMap_show.size(); i++){
@@ -97,5 +97,5 @@ int main(){
             break;
         }
     }
-    return 0;
+    return true;
 }
