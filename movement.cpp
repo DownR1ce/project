@@ -173,7 +173,7 @@ bool TongGuan(char O){
 void Saolei(string order, Maps& map){
     int numberofmine = 0;
     number_of_mineSweeping -= 1;
-    if(order == "m"){
+    if(order == "m" && number_of_mineSweeping >0){
         if (map.MazeMap_hide[Player_coordinate.y][Player_coordinate.x + 1] == 'X'){
             map.MazeMap_hide[Player_coordinate.y][Player_coordinate.x + 1]='O';
             map.MazeMap_show[Player_coordinate.y][Player_coordinate.x + 1]='O';
