@@ -4,6 +4,7 @@
 #include <thread>
 #include <cstdlib>
 #include <ctime>
+#include <algorithm>
 
 // Game structs
 struct Plane {
