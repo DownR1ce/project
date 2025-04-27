@@ -3,5 +3,6 @@
 #define SMALLGAME_H
 
 void JiaZhuangTaShiYiGeYouXi ();
+void AirplaneBattleGame();
 
 #endif
