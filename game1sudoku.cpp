@@ -2,6 +2,7 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <limits>
 
 const int N = 9;
 
@@ -87,19 +88,26 @@ std::vector<std::vector<int>> generateSudoku(char difficulty) {
     return board;
 }
 
-// 打印数独棋盘（增量更新版本）
-void updateBoard(const std::vector<std::vector<int>>& currentBoard, 
-                 std::vector<std::vector<int>>& prevBoard) {
+// 打印数独棋盘
+void printBoard(const std::vector<std::vector<int>>& board) {
     for (int row = 0; row < N; ++row) {
         for (int col = 0; col < N; ++col) {
-            if (currentBoard[row][col] != prevBoard[row][col]) {
-                // 移动到对应的位置并更新数字
-                std::cout << "\033[" << row + 1 << ";" << col * 2 + 1 << "H" << currentBoard[row][col];
-                prevBoard[row][col] = currentBoard[row][col];
+            std::cout << board[row][col] << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+// 检查数独是否已完成
+bool isBoardComplete(const std::vector<std::vector<int>>& board) {
+    for (int row = 0; row < N; ++row) {
+        for (int col = 0; col < N; ++col) {
+            if (board[row][col] == 0) {
+                return false;
             }
         }
     }
-    std::cout.flush(); // 确保立即显示更新
+    return true;
 }
 
 int main() {
@@ -107,26 +115,46 @@ int main() {
     std::cout << "Choose difficulty: (e)asy, (n)ormal, (h)ard" << std::endl;
     char difficulty;
     std::cin >> difficulty;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // 清空输入缓冲区
 
     // 生成一个数独谜题
     std::vector<std::vector<int>> puzzle = generateSudoku(difficulty);
-    std::vector<std::vector<int>> prevPuzzle = puzzle;
 
     std::cout << "Generated Sudoku Puzzle:" << std::endl;
-    for (int row = 0; row < N; ++row) {
-        for (int col = 0; col < N; ++col) {
-            std::cout << puzzle[row][col] << " ";
+    printBoard(puzzle);
+
+    while (!isBoardComplete(puzzle)) {
+        int row, col, num;
+        std::cout << "Enter row (1 - 9), column (1 - 9), and number (1 - 9) (separated by spaces), or -1 to quit: ";
+        std::cin >> row;
+        if (row == -1) {
+            break;
         }
-        std::cout << std::endl;
+        std::cin >> col >> num;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // 清空输入缓冲区
+
+        // 调整为 0 索引
+        row--;
+        col--;
+
+        if (row >= 0 && row < N && col >= 0 && col < N && num >= 1 && num <= 9) {
+            if (isSafe(puzzle, row, col, num)) {
+                puzzle[row][col] = num;
+                std::cout << "Number placed successfully." << std::endl;
+            } else {
+                std::cout << "Invalid move. Please try again." << std::endl;
+            }
+        } else {
+            std::cout << "Invalid input. Please try again." << std::endl;
+        }
+
+        printBoard(puzzle);
     }
 
-    // 求解数独谜题
-    std::vector<std::vector<int>> solution = puzzle;
-    if (solveSudoku(solution)) {
-        std::cout << "\nSolved Sudoku:" << std::endl;
-        updateBoard(solution, prevPuzzle);
+    if (isBoardComplete(puzzle)) {
+        std::cout << "Congratulations! You solved the sudoku." << std::endl;
     } else {
-        std::cout << "\nNo solution exists." << std::endl;
+        std::cout << "Game ended." << std::endl;
     }
 
     return 0;
