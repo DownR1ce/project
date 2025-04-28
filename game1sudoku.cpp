@@ -6,19 +6,15 @@
 
 const int N = 9;
 
-// 检查在 (row, col) 位置放置 num 是否合法
+// 检查位置
 bool isSafe(std::vector<std::vector<int>>& board, int row, int col, int num) {
-    // 检查行
     for (int i = 0; i < N; ++i) {
         if (board[row][i] == num) return false;
     }
-
-    // 检查列
     for (int i = 0; i < N; ++i) {
         if (board[i][col] == num) return false;
     }
 
-    // 检查 3x3 子网格
     int startRow = row - row % 3;
     int startCol = col - col % 3;
     for (int i = 0; i < 3; ++i) {
@@ -54,7 +50,7 @@ bool solveSudoku(std::vector<std::vector<int>>& board, std::mt19937& rng) {
     return true;
 }
 
-// 生成一个数独谜题
+// 生成数独题
 std::vector<std::vector<int>> generateSudoku(char difficulty) {
     std::vector<std::vector<int>> board(N, std::vector<int>(N, 0));
     std::random_device rd;
@@ -62,7 +58,7 @@ std::vector<std::vector<int>> generateSudoku(char difficulty) {
 
     solveSudoku(board, rng);
 
-    // 根据难度设置移除数字的数量
+    // 难度
     int numToRemove;
     switch (difficulty) {
         case 'e':
@@ -82,7 +78,7 @@ std::vector<std::vector<int>> generateSudoku(char difficulty) {
     std::uniform_int_distribution<int> distRow(0, N - 1);
     std::uniform_int_distribution<int> distCol(0, N - 1);
 
-    // 随机移除一些数字来创建谜题
+    // 随机移除数字
     while (numToRemove > 0) {
         int row = distRow(rng);
         int col = distCol(rng);
@@ -95,7 +91,7 @@ std::vector<std::vector<int>> generateSudoku(char difficulty) {
     return board;
 }
 
-// 计算剩余未完成的格子数量
+// 记录没写完的
 int countRemainingCells(const std::vector<std::vector<int>>& board) {
     int count = 0;
     for (int row = 0; row < N; ++row) {
@@ -119,7 +115,7 @@ void printBoard(const std::vector<std::vector<int>>& board, int remaining, int m
     }
 }
 
-// 检查数独是否已完成
+// 检查数独是否完成
 bool isBoardComplete(const std::vector<std::vector<int>>& board) {
     for (int row = 0; row < N; ++row) {
         for (int col = 0; col < N; ++col) {
@@ -156,7 +152,7 @@ int main() {
     }
     int mistakesLeft = mistakesAllowed;
 
-    // 生成一个数独谜题
+    // 生成题
     std::vector<std::vector<int>> puzzle = generateSudoku(difficulty);
 
     int remaining = countRemainingCells(puzzle);
@@ -173,7 +169,6 @@ int main() {
         std::cin >> col >> num;
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // 清空输入缓冲区
 
-        // 调整为 0 索引
         row--;
         col--;
 
