@@ -4,6 +4,7 @@
 #include "player.h"
 #include "MazeMap.h"
 
+using namespace std;
 
 int have_mine (Maps maps){
     int number = 0;
@@ -131,7 +132,7 @@ string player_movement (string order, Maps& maps){
             maps.MazeMap_show[maybe.y][maybe.x] = 'P';
         }
         if (maps.MazeMap_hide[maybe.y][maybe.x] == 'X'){
-            tips = "你踩到了炸弹, -1生命值";
+            tips = "You stepped on a bomb, -1 heart";
             number_of_mine -= 1;
             maps.MazeMap_show [Player_coordinate.y][Player_coordinate.x] = '.';
             Player_coordinate = maybe;
@@ -140,16 +141,16 @@ string player_movement (string order, Maps& maps){
             player_heart --;
         }
         if (maps.MazeMap_hide[maybe.y][maybe.x] == '?'){
-            tips = "你找到了神秘的门, 按e进入";
+            tips = "You have found the mysterious door, press' e 'to enter, \nand enter' other 'to cancel the interaction.";
             maps.MazeMap_show[maybe.y][maybe.x] = '?';
         }
         if (maps.MazeMap_hide[maybe.y][maybe.x] == 'D'){
-            tips = "你找到了出口，但是钥匙呢？\n 摁e开锁";
+            tips = "You found the door, but where's the key? \nPress' e 'to unlock, press' other 'to cancel the interaction.";
             maps.MazeMap_show[maybe.y][maybe.x] = 'D';
         }
     }
     else{
-        tips = "不能撞墙";
+        tips = "you can not move to the wall";
     }
     return tips;
 }
@@ -157,11 +158,11 @@ string player_movement (string order, Maps& maps){
 bool TongGuan(char O){
     if(O == 'e'){
         if (number_of_key == XuYaoDe_number_of_key){
-            cout << "恭喜你成功的出去了" << endl;
+            cout << "congratulations!!! You successfully escaped" << endl;
             return true;
         }
         else{
-            cout << "抱歉你的钥匙不够" << endl;
+            cout << "sorry, you do not have enough key" << endl;
             return false;
         }
     }
@@ -171,13 +172,13 @@ bool TongGuan(char O){
 }
 
 void Saolei(string order, Maps& map){
+    int numberofmine = 0;
     if(number_of_mineSweeping == 0){
         cout << "sorry, you cannot sweep mine anmymore!!"<<endl;
         return;
     }
-    int numberofmine = 0;
     number_of_mineSweeping -= 1;
-    if(order == "m" && number_of_mineSweeping >0){
+    if(order == "m"){
         if (map.MazeMap_hide[Player_coordinate.y][Player_coordinate.x + 1] == 'X'){
             map.MazeMap_hide[Player_coordinate.y][Player_coordinate.x + 1]='O';
             map.MazeMap_show[Player_coordinate.y][Player_coordinate.x + 1]='O';
