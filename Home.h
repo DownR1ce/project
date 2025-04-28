@@ -1,4 +1,4 @@
-//Home.h
+//home.h
 #ifndef HOME_H
 #define HOME_H
 
@@ -16,6 +16,7 @@ string random_tips();
 void showLoadingBar();
 void showLoadingScreen();
 vector <int> getXY();
+extern char difficulty_of_the_quanbuyouxi;
 
 
 #endif
