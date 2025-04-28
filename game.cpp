@@ -19,6 +19,7 @@
 using namespace std;
 
 bool game(){
+    number_of_key = 0;
     vector <int> xy = getXY();
     int x,y;
     x= xy[0];
@@ -43,6 +44,7 @@ bool game(){
     Print_Number (Mine_Number);
 
     while(true){
+        cout << "your key number is: " << number_of_key << endl;
         cout << "number of mine remain: "<< number_of_mine << endl;
         cout << "number of mine sweeping remain: " <<  number_of_mineSweeping << endl;
         string order;
@@ -75,16 +77,19 @@ bool game(){
         Print_Number (Mine_Number);
         
         //神秘の门
-        if (tips == "你找到了神秘的门, 按e进入"){
+        if (tips == "You have found the mysterious door, press' e 'to enter, \nand enter' other 'to cancel the interaction."){
             char o;
             cin >> o;
             if (o=='e'){
-                JiaZhuangTaShiYiGeYouXi ();
+                int type = startSmallGame();
+                if (type == 1){
+                    printCentered(Map_Output_vector);
+                }
             }
         }
 
         //出去の门
-        if (tips == "你找到了出口，但是钥匙呢？\n 摁e开锁"){
+        if (tips == "You found the door, but where's the key? \nPress' e 'to unlock, press' other 'to cancel the interaction."){
             char O;
             cin >> O;
             if (TongGuan(O)){
@@ -93,7 +98,7 @@ bool game(){
         }
 
         if (player_heart == 0){
-            cout << "game over, 你死了" << endl;
+            cout << "game over, you X_X" << endl;
             break;
         }
     }
