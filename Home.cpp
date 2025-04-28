@@ -174,6 +174,8 @@ void showLoadingScreen() {
     CLEAR_SCREEN();
 }
 
+char difficulty_of_the_quanbuyouxi= '0';
+
 char chooseDifficulty(){
     pair<int, int> terminalSize = getTerminalSize();
     int termWidth = terminalSize.first;
@@ -185,15 +187,19 @@ char chooseDifficulty(){
     string diff;
     cin >> diff;
     if(diff == "e"){
+        difficulty_of_the_quanbuyouxi = '1';
         return '1';
     }
     else if(diff == "n"){
+        difficulty_of_the_quanbuyouxi = '2';
         return '2';
     }
     else if(diff == "h"){
+        difficulty_of_the_quanbuyouxi = '3';
         return '3';
     }
     else if(diff == "f"){
+        difficulty_of_the_quanbuyouxi = '3';
         return '4';
     }
     else if(diff == "q"){
