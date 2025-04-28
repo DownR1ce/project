@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
-#include <cstdlib>
-#include <ctime>
+#include <random>
 #include <limits>
+#include <algorithm>
 
 const int N = 9;
 
@@ -31,14 +31,16 @@ bool isSafe(std::vector<std::vector<int>>& board, int row, int col, int num) {
 }
 
 // 求解数独
-bool solveSudoku(std::vector<std::vector<int>>& board) {
+bool solveSudoku(std::vector<std::vector<int>>& board, std::mt19937& rng) {
     for (int row = 0; row < N; ++row) {
         for (int col = 0; col < N; ++col) {
             if (board[row][col] == 0) {
-                for (int num = 1; num <= 9; ++num) {
+                std::vector<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+                std::shuffle(numbers.begin(), numbers.end(), rng);
+                for (int num : numbers) {
                     if (isSafe(board, row, col, num)) {
                         board[row][col] = num;
-                        if (solveSudoku(board)) {
+                        if (solveSudoku(board, rng)) {
                             return true;
                         } else {
                             board[row][col] = 0;
@@ -55,7 +57,10 @@ bool solveSudoku(std::vector<std::vector<int>>& board) {
 // 生成一个数独谜题
 std::vector<std::vector<int>> generateSudoku(char difficulty) {
     std::vector<std::vector<int>> board(N, std::vector<int>(N, 0));
-    solveSudoku(board);
+    std::random_device rd;
+    std::mt19937 rng(rd());
+
+    solveSudoku(board, rng);
 
     // 根据难度设置移除数字的数量
     int numToRemove;
@@ -74,11 +79,13 @@ std::vector<std::vector<int>> generateSudoku(char difficulty) {
             break;
     }
 
+    std::uniform_int_distribution<int> distRow(0, N - 1);
+    std::uniform_int_distribution<int> distCol(0, N - 1);
+
     // 随机移除一些数字来创建谜题
-    std::srand(std::time(0));
     while (numToRemove > 0) {
-        int row = std::rand() % N;
-        int col = std::rand() % N;
+        int row = distRow(rng);
+        int col = distCol(rng);
         if (board[row][col] != 0) {
             board[row][col] = 0;
             --numToRemove;
@@ -88,8 +95,22 @@ std::vector<std::vector<int>> generateSudoku(char difficulty) {
     return board;
 }
 
+// 计算剩余未完成的格子数量
+int countRemainingCells(const std::vector<std::vector<int>>& board) {
+    int count = 0;
+    for (int row = 0; row < N; ++row) {
+        for (int col = 0; col < N; ++col) {
+            if (board[row][col] == 0) {
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+
 // 打印数独棋盘
-void printBoard(const std::vector<std::vector<int>>& board) {
+void printBoard(const std::vector<std::vector<int>>& board, int remaining, int mistakesLeft) {
+    std::cout << "Current Sudoku Puzzle (Remaining cells: " << remaining << ", Mistakes left: " << mistakesLeft << "):" << std::endl;
     for (int row = 0; row < N; ++row) {
         for (int col = 0; col < N; ++col) {
             std::cout << board[row][col] << " ";
@@ -117,17 +138,36 @@ int main() {
     std::cin >> difficulty;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // 清空输入缓冲区
 
+    // 根据难度设置错误保护次数
+    int mistakesAllowed;
+    switch (difficulty) {
+        case 'e':
+            mistakesAllowed = 3;
+            break;
+        case 'n':
+            mistakesAllowed = 6;
+            break;
+        case 'h':
+            mistakesAllowed = 9;
+            break;
+        default:
+            mistakesAllowed = 6;  // 默认难度为 normal
+            break;
+    }
+    int mistakesLeft = mistakesAllowed;
+
     // 生成一个数独谜题
     std::vector<std::vector<int>> puzzle = generateSudoku(difficulty);
 
-    std::cout << "Generated Sudoku Puzzle:" << std::endl;
-    printBoard(puzzle);
+    int remaining = countRemainingCells(puzzle);
+    printBoard(puzzle, remaining, mistakesLeft);
 
-    while (!isBoardComplete(puzzle)) {
+    while (!isBoardComplete(puzzle) && mistakesLeft > 0) {
         int row, col, num;
         std::cout << "Enter row (1 - 9), column (1 - 9), and number (1 - 9) (separated by spaces), or -1 to quit: ";
         std::cin >> row;
         if (row == -1) {
+            std::cout << "游戏失败" << std::endl;
             break;
         }
         std::cin >> col >> num;
@@ -142,19 +182,26 @@ int main() {
                 puzzle[row][col] = num;
                 std::cout << "Number placed successfully." << std::endl;
             } else {
-                std::cout << "Invalid move. Please try again." << std::endl;
+                mistakesLeft--;
+                if (mistakesLeft > 0) {
+                    std::cout << "Invalid move. You have " << mistakesLeft << " mistakes left. Please try again." << std::endl;
+                } else {
+                    std::cout << "You have used up all your mistake allowances. Game ended." << std::endl;
+                    break;
+                }
             }
         } else {
             std::cout << "Invalid input. Please try again." << std::endl;
         }
 
-        printBoard(puzzle);
+        remaining = countRemainingCells(puzzle);
+        printBoard(puzzle, remaining, mistakesLeft);
     }
 
     if (isBoardComplete(puzzle)) {
         std::cout << "Congratulations! You solved the sudoku." << std::endl;
-    } else {
-        std::cout << "Game ended." << std::endl;
+    } else if (mistakesLeft <= 0) {
+        std::cout << "You have used up all your mistake allowances. Game ended." << std::endl;
     }
 
     return 0;
