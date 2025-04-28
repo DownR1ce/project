@@ -2,7 +2,12 @@
 #ifndef SMALLGAME_H
 #define SMALLGAME_H
 
-void JiaZhuangTaShiYiGeYouXi ();
-void AirplaneBattleGame();
+#include <vector>
+
+void AirplaneBattleGame();  
+void snake();
+int startSmallGame(); 
+extern vector <void(*)()> games;
+void shudu();
 
 #endif
