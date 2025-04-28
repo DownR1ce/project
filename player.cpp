@@ -12,8 +12,14 @@ struct coordinate{
 int player_heart = 0;
 
 void getHeart(){
-    cout << "请输入玩家血量（最后这个会改成让玩家选难度，然后每个难度不同血量）" << endl;
-    cin >> player_heart;
+    while (true){
+        cout << "only positive integer!!!" << endl;
+        cin >> player_heart;
+        if(player_heart < 0){
+            continue;
+        }
+        break;
+    }
     return;
 }
 
