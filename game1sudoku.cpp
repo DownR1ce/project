@@ -58,7 +58,7 @@ std::vector<std::vector<int>> generateSudoku(char difficulty) {
 
     solveSudoku(board, rng);
 
-    // 难度
+    // 设置难度
     int numToRemove;
     switch (difficulty) {
         case 'e':
@@ -78,7 +78,7 @@ std::vector<std::vector<int>> generateSudoku(char difficulty) {
     std::uniform_int_distribution<int> distRow(0, N - 1);
     std::uniform_int_distribution<int> distCol(0, N - 1);
 
-    // 随机移除数字
+    // 随机移除
     while (numToRemove > 0) {
         int row = distRow(rng);
         int col = distCol(rng);
@@ -91,7 +91,7 @@ std::vector<std::vector<int>> generateSudoku(char difficulty) {
     return board;
 }
 
-// 记录没写完的
+// 记录未完成数量
 int countRemainingCells(const std::vector<std::vector<int>>& board) {
     int count = 0;
     for (int row = 0; row < N; ++row) {
@@ -115,7 +115,7 @@ void printBoard(const std::vector<std::vector<int>>& board, int remaining, int m
     }
 }
 
-// 检查数独是否完成
+// 检查数独是否已完成
 bool isBoardComplete(const std::vector<std::vector<int>>& board) {
     for (int row = 0; row < N; ++row) {
         for (int col = 0; col < N; ++col) {
@@ -128,11 +128,20 @@ bool isBoardComplete(const std::vector<std::vector<int>>& board) {
 }
 
 int main() {
+    std::cout << "Welcome to Sudoku!" << std::endl;
+    std::cout << "How to play:" << std::endl;
+    std::cout << "1. Choose a difficulty level: 'e' for easy, 'n' for normal, 'h' for hard." << std::endl;
+    std::cout << "2. Enter the row (1 - 9), column (1 - 9), and number (1 - 9) separated by spaces to fill in a cell." << std::endl;
+    std::cout << "3. Enter -1 at any time to quit the game." << std::endl;
+    std::cout << "4. Each difficulty has a limited number of mistakes allowed (3 for easy, 6 for normal, 9 for hard)." << std::endl;
+    std::cout << "Press Enter to start the game..." << std::endl;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
     // 提示选择难度
     std::cout << "Choose difficulty: (e)asy, (n)ormal, (h)ard" << std::endl;
     char difficulty;
     std::cin >> difficulty;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // 清空输入缓冲区
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     // 根据难度设置错误保护次数
     int mistakesAllowed;
@@ -152,7 +161,7 @@ int main() {
     }
     int mistakesLeft = mistakesAllowed;
 
-    // 生成题
+    // 生成数独题
     std::vector<std::vector<int>> puzzle = generateSudoku(difficulty);
 
     int remaining = countRemainingCells(puzzle);
@@ -163,12 +172,13 @@ int main() {
         std::cout << "Enter row (1 - 9), column (1 - 9), and number (1 - 9) (separated by spaces), or -1 to quit: ";
         std::cin >> row;
         if (row == -1) {
-            std::cout << "游戏失败" << std::endl;
+            std::cout << "Quit the game halfway, Game Over" << std::endl;
             break;
         }
         std::cin >> col >> num;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // 清空输入缓冲区
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
+    
         row--;
         col--;
 
@@ -181,7 +191,7 @@ int main() {
                 if (mistakesLeft > 0) {
                     std::cout << "Invalid move. You have " << mistakesLeft << " mistakes left. Please try again." << std::endl;
                 } else {
-                    std::cout << "You have used up all your mistake allowances. Game ended." << std::endl;
+                    std::cout << "You have used up all your mistake allowances. Game Over." << std::endl;
                     break;
                 }
             }
@@ -196,8 +206,8 @@ int main() {
     if (isBoardComplete(puzzle)) {
         std::cout << "Congratulations! You solved the sudoku." << std::endl;
     } else if (mistakesLeft <= 0) {
-        std::cout << "You have used up all your mistake allowances. Game ended." << std::endl;
+        std::cout << "You have used up all your mistake allowances. Game Over." << std::endl;
     }
 
     return 0;
-}
+}    
