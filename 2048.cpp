@@ -2,16 +2,15 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
-#include <unistd.h> // 用于 usleep 函数
+#include <unistd.h>
 
 using namespace std;
 
-// 游戏界面
-const int SIZE = 4;
-vector<vector<int>> board(SIZE, vector<int>(SIZE, 0));
-int targetScore = 0; 
+const int SIZE = 4; // 游戏区域大小
+vector<vector<int>> board(SIZE, vector<int>(SIZE, 0)); // 游戏区域
+int targetScore = 0; // 目标分数
 
-// 在随机空位置生成 2 或 4
+// 在随机空位置生成一个 2 或 4
 void addRandomTile() {
     vector<pair<int, int>> emptyCells;
     for (int i = 0; i < SIZE; i++) {
@@ -23,7 +22,7 @@ void addRandomTile() {
     }
     if (!emptyCells.empty()) {
         int index = rand() % emptyCells.size();
-        int value = (rand() % 2 + 1) * 2;
+        int value = (rand() % 2 + 1) * 2; // 生成 2 或 4
         board[emptyCells[index].first][emptyCells[index].second] = value;
     }
 }
@@ -35,9 +34,20 @@ void initGame() {
     addRandomTile();
 }
 
+// 计算当前总分
+int calculateTotalScore() {
+    int total = 0;
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            total += board[i][j];
+        }
+    }
+    return total;
+}
+
 // 打印游戏区域
 void printBoard() {
-    system("clear");
+    system("clear"); // 清屏
     cout << "Welcome to 2048!" << endl;
     cout << "Use W (Up), A (Left), S (Down), D (Right) to move the tiles." << endl;
     cout << "Merge tiles with the same number to reach the target score!" << endl;
@@ -169,18 +179,7 @@ void moveDown() {
     }
 }
 
-// 计算当前总分
-int calculateTotalScore() {
-    int total = 0;
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            total += board[i][j];
-        }
-    }
-    return total;
-}
-
-// 处理输入
+// 处理用户输入
 void handleInput() {
     char input;
     cin >> input;
@@ -194,7 +193,7 @@ void handleInput() {
     addRandomTile();
 }
 
-// 游戏介绍和难度选择！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+// 游戏介绍和难度选择！！！！！！！！！！！！！！！！！！！！！
 void showWelcomeScreen() {
     system("clear");
     cout << "Welcome to 2048!" << endl;
@@ -207,13 +206,13 @@ void showWelcomeScreen() {
     cout << "1. Easy (Target Score: 300)" << endl;
     cout << "2. Normal (Target Score: 500)" << endl;
     cout << "3. Hard (Target Score: 700)" << endl;
-    int choice;
+    char choice;
     cin >> choice;
     switch (choice) {
-        case 1: targetScore = 300; break;
-        case 2: targetScore = 500; break;
-        case 3: targetScore = 700; break;
-        default: targetScore = 500; break;
+        case '1': targetScore = 300; break;
+        case '2': targetScore = 500; break;
+        case '3': targetScore = 700; break;
+        default: targetScore = 500; break; // 默认普通难度
     }
 }
 
