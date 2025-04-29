@@ -42,6 +42,8 @@ void printBoard() {
     cout << "Use W (Up), A (Left), S (Down), D (Right) to move the tiles." << endl;
     cout << "Merge tiles with the same number to reach the target score!" << endl;
     cout << "Target Score: " << targetScore << endl;
+    cout << "Current Total: " << calculateTotalScore() << endl;
+    cout << "Remaining: " << targetScore - calculateTotalScore() << endl;
     cout << "-----------------------------" << endl;
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
