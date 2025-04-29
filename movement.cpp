@@ -3,6 +3,16 @@
 #include <cmath>
 #include "player.h"
 #include "MazeMap.h"
+#include "utils.h"
+#include "SmallGame.h"
+
+#ifdef _WIN32
+    #include <windows.h>
+    #define CLEAR_SCREEN() system("cls")
+#else
+    #include <unistd.h>
+    #define CLEAR_SCREEN() system("clear")
+#endif
 
 using namespace std;
 
@@ -142,7 +152,21 @@ string player_movement (string order, Maps& maps){
         }
         if (maps.MazeMap_hide[maybe.y][maybe.x] == '?'){
             tips = "You have found the mysterious door, press' e 'to enter, \nand enter' other 'to cancel the interaction.";
+            cout << tips<<endl;
             maps.MazeMap_show[maybe.y][maybe.x] = '?';
+            char o;
+            int temK = number_of_key;
+            cin >> o;
+            if (o=='e'){
+                int type = startSmallGame();
+            }
+            if (o!='e'){
+                CLEAR_SCREEN();
+            }
+            if (number_of_key > temK){
+                maps.MazeMap_show[maybe.y][maybe.x] = '¿';
+                maps.MazeMap_hide[maybe.y][maybe.x] = '¿';
+            }
         }
         if (maps.MazeMap_hide[maybe.y][maybe.x] == 'D'){
             tips = "You found the door, but where's the key? \nPress' e 'to unlock, press' other 'to cancel the interaction.";
