@@ -8,6 +8,7 @@
 #include "player.h"
 #include "game.h"
 #include "utils.h"
+#include <algorithm>
 #ifdef _WIN32
     #include <windows.h>
     #include <conio.h>
@@ -80,9 +81,22 @@ void HomePage(){
         fin.close();
         GameChoice();
         if (choice == 'N' || choice == 'n') {
-            sta = game();
+            sta = game("n");
         } else if (choice == 'S' || choice == 's') {
-            // links to saved game
+            PrintSaved();
+            string filename;
+            if (NameSaved.size()>0){
+                while(true){
+                    cin >> filename;
+                    auto it = find(NameSaved.begin(), NameSaved.end(), filename);
+                    if(filename == "q"){
+                        break;
+                    }
+                    if(it != NameSaved.end()){
+                        sta = game(filename);
+                    }
+                }
+            }
         } else if (choice == 'T' || choice == 't') {
             // links to tips
         } else {
