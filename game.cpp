@@ -8,6 +8,7 @@
 #include "utils.h"
 #include "SmallGame.h"
 #include "Home.h"
+#include "Savedata.h"
 #ifdef _WIN32
     #include <windows.h>
     #define SLEEP(ms) Sleep(ms)
@@ -18,18 +19,41 @@
 
 using namespace std;
 
-bool game(){
-    number_of_key = 0;
-    vector <int> xy = getXY();
-    int x,y;
-    x= xy[0];
-    y= xy[1];
-    if (x==100000 && y==100000){
-        return true;
+bool game(string ch){
+    Maps maps;
+    int x, y;
+    if (ch == "n"){
+        number_of_key = 0;
+        vector <int> xy = getXY();
+        x= xy[0];
+        y= xy[1];
+        if (x==100000 && y==100000){
+            return true;
+            }
+        maps = Make_Map(x, y);
+        cout << "the map size is "<<x<<" * "<<y<<", please ready to play!!!"<<endl; 
+        SLEEP(5000);
     }
-    Maps maps = Make_Map(x, y);
-    cout << "the map size is "<<x<<" * "<<y<<", please ready to play!!!"<<endl; 
-    SLEEP(5000);
+    else{
+        GameSaveData data;
+        if (!loadGame(data, ch)) {
+            cerr << "加载存档失败！" << endl;
+            return true;
+        }
+        player_heart = data.player_heart;
+        player_inventory = data.player_inventory;
+        number_of_mineSweeping = data.number_of_mineSweeping;
+        number_of_key = data.number_of_key;
+        XuYaoDe_number_of_key = data.XuYaoDe_number_of_key;
+        Player_coordinate.x = data.Player_coordinate.x;
+        Player_coordinate.y = data.Player_coordinate.y;
+        number_of_mine = data.number_of_mine;
+        difficulty_of_the_quanbuyouxi = data.difficulty_of_the_quanbuyouxi;
+        maps.MazeMap_hide = data.MazeMap_hide;
+        maps.MazeMap_show = data.MazeMap_show;
+        x = data.x;
+        y = data.y;
+    }
     vector <string> Map_Output_vector;
 
     for(int i = 0; i<maps.MazeMap_show.size(); i++){
@@ -44,14 +68,41 @@ bool game(){
     Print_Number (Mine_Number);
 
     while(true){
+        cout << "your heart: " << player_heart << endl;
         cout << "your key number is: " << number_of_key << endl;
         cout << "number of mine remain: "<< number_of_mine << endl;
         cout << "number of mine sweeping remain: " <<  number_of_mineSweeping << endl;
         string order;
         string tips;
         cout << "please enter 'wasd' to control player" << endl;
+        cout <<"enter'save' to save the game" << endl;
         cin >> order;
         cout << "\033[2J\033[H";
+        if (order == "save"){
+            GameSaveData savedata;
+            savedata.player_heart = player_heart;
+            savedata.player_inventory=player_inventory;
+            savedata.number_of_mineSweeping = number_of_mineSweeping;
+            savedata.number_of_key = number_of_key;
+            savedata.XuYaoDe_number_of_key = XuYaoDe_number_of_key;
+            savedata.Player_coordinate.x = Player_coordinate.x;
+            savedata.Player_coordinate.y = Player_coordinate.y;
+            savedata.number_of_mine = number_of_mine;
+            savedata.difficulty_of_the_quanbuyouxi = difficulty_of_the_quanbuyouxi;
+            savedata.x = x;
+            savedata.y = y;
+            savedata.MazeMap_hide = maps.MazeMap_hide;
+            savedata.MazeMap_show = maps.MazeMap_show;
+            string name;
+            cout << "please enter a name for your savefile." << endl;
+            cin >> name;
+            saveGame(savedata, name);
+            NameSaved.push_back(name);
+            break;
+        }
+        if(order == "FYCShiGeDaShuaiBi"){
+            player_heart=10000;
+        }
         if (order == "q"){
             break;
         }
@@ -78,14 +129,7 @@ bool game(){
         
         //神秘の门
         if (tips == "You have found the mysterious door, press' e 'to enter, \nand enter' other 'to cancel the interaction."){
-            char o;
-            cin >> o;
-            if (o=='e'){
-                int type = startSmallGame();
-                if (type == 1){
-                    printCentered(Map_Output_vector);
-                }
-            }
+            int abcdefg = 1;
         }
 
         //出去の门
@@ -96,7 +140,6 @@ bool game(){
                 break;
             }
         }
-
         if (player_heart == 0){
             cout << "game over, you X_X" << endl;
             break;
