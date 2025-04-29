@@ -883,10 +883,10 @@ void shudu() {
     printBoard(puzzle, remaining, mistakesLeft);
 
     while (!isBoardComplete(puzzle) && mistakesLeft > 0) {
-        cout << "\033[2J\033[H";
         int row, col, num;
         std::cout << "Enter row (1 - 9), column (1 - 9), and number (1 - 9) (separated by spaces), or -1 to quit: ";
         std::cin >> row;
+        cout << "\033[2J\033[H";
         if (row == -1) {
             std::cout << "Quit the game halfway, Game Over" << std::endl;
             break;
