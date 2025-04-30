@@ -1,7 +1,7 @@
 cc = g++
 prom = game
 deps = *.h
-obj = main.o Element.o game.o Home.o MazeMap.o movement.o SmallGame.o player.o utils.o
+obj = main.o Element.o game.o Home.o MazeMap.o movement.o SmallGame.o player.o utils.o Savedata.o
 flag = -pthread
 
 
