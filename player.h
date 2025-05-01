@@ -6,8 +6,8 @@
 #include <string>
 
 struct coordinate{
-    int y = 0;
-    int x = 0;
+    int y;
+    int x;
 };
 
 using namespace std;
