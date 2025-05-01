@@ -1,15 +1,13 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include "Savedata.h"
+#include "player.h"
 
 using namespace std;
 
 vector <string> NameSaved;
 
-struct coordinate{
-    int y = 0;
-    int x = 0;
-};
 
 int player_heart = 0;
 
@@ -26,6 +24,7 @@ void getHeart(){
 }
 
 void PrintSaved(){
+    showsavename(NameSaved);
     if(NameSaved.size()>0){
         for(int i = 0; i<NameSaved.size(); i++){
             cout << NameSaved[i] << endl;
