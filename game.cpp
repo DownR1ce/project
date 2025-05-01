@@ -37,7 +37,7 @@ bool game(string ch){
     else{
         GameSaveData data;
         if (!loadGame(data, ch)) {
-            cerr << "加载存档失败！" << endl;
+            cerr << "Failed to load archive！" << endl;
             return true;
         }
         player_heart = data.player_heart;
@@ -97,6 +97,7 @@ bool game(string ch){
             cout << "please enter a name for your savefile." << endl;
             cin >> name;
             saveGame(savedata, name);
+            savenameintofile(name);
             NameSaved.push_back(name);
             break;
         }
