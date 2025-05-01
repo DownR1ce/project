@@ -3,6 +3,10 @@
 #define SAVEDATA_H
 
 #include <vector>
+#include <string>
+#include "player.h"
+
+using namespace std;
 
 struct GameSaveData {
     int player_heart;
@@ -20,7 +24,9 @@ struct GameSaveData {
     std::vector<std::vector<char>> MazeMap_show;
 };
 
-bool loadGame(GameSaveData& data, const std::string& filename);
-void saveGame(const GameSaveData& data, const std::string& filename);
+bool loadGame(GameSaveData& data, const string& filename);
+void saveGame(const GameSaveData& data, const string& filename);
+void savenameintofile(string name);
+void showsavename(vector<string>& name);
 
 #endif
