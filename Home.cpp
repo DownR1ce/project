@@ -90,6 +90,8 @@ void HomePage(){
                     cin >> filename;
                     auto it = find(NameSaved.begin(), NameSaved.end(), filename);
                     if(filename == "q"){
+                        sta = true;
+                        CLEAR_SCREEN();
                         break;
                     }
                     if(it != NameSaved.end()){
