@@ -201,6 +201,6 @@ void Print_Number (int number){
             " ***     *"
         }
     };
-    digits[number].emplace(digits[number].begin(), "       角色周围5*5的炸弹数量(x*y):");
+    digits[number].emplace(digits[number].begin(), "   Number of 5 * 5 bombs around the player(x*y):");
     printFor_digitNumber(digits[number]);
 }
