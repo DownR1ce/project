@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "player.h"
+#include <algorithm>
 
 struct GameSaveData {
     int player_heart;
@@ -89,15 +90,7 @@ bool loadGame(GameSaveData& data, const std::string& filename) {
     }
     
     in.close();
-    std::cout << "从 " << filename << " Read the archive successfully." << std::endl;
-    std::cout << data.player_heart << "\n"<<data.number_of_key<<"\n" << data.number_of_mineSweeping << "\n" << data.XuYaoDe_number_of_key << "\n" << Player_coordinate.x << Player_coordinate.y << "\n" 
-    << data.number_of_mine<<data.difficulty_of_the_quanbuyouxi<<std::endl;
-    for(int i = 0; i < data.MazeMap_show.size(); i++){
-        for(int j = 0; j < data.MazeMap_show[0].size(); j++){
-            std::cout<<data.MazeMap_show[i][j];
-        }
-        std::cout<<std::endl;
-    }
+    std::cout << "From " << filename << " Read the archive successfully." << std::endl;
     return true;
 }
 
@@ -138,4 +131,34 @@ void saveGame(const GameSaveData& data, const std::string& filename) {
     
     out.close();
     std::cout << "Game has been saved " << filename << std::endl;
+}
+
+using namespace std;
+
+void savenameintofile(string name){
+    ifstream fin;
+    fin.open("nameofcundang.txt");
+    string x;
+    while (fin >> x){
+        if(x == name){
+            return;
+        }
+    }
+    fin.close();
+    ofstream fout;
+    fout.open("nameofcundang.txt", ios::app);
+    fout << name << endl;
+    fout.close();
+    return;
+}
+void showsavename(vector<string>& name){
+    ifstream fin;
+    fin.open("nameofcundang.txt");
+    string x;
+    while (fin >> x){
+        if (find(name.begin(), name.end(), x) == name.end()){
+            name.push_back(x);
+        }
+    }
+    fin.close();
 }
