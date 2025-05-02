@@ -4,7 +4,7 @@ Terminal Introder is a text-based puzzle game that combines maze, minesweeper, a
 Fan Yichen 3036459001
 
 
-## Gameplay(Make sure to pull the terminal to its maximum when playing.)
+# Gameplay(Make sure to pull the terminal to its maximum when playing.):
 The core gameplay of this game is to find all mysterious doors through the maze to obtain keys, and to ensure the survival of the character, try to avoid stepping on landmines as much as possible, and finally find the exit. This game has three built-in game difficulty levels(mazemap size: x*y): easy (11*11), normal (15*15) and hard (31*19). You also can challenge a higher level of difficulty. you can choose the size of map yourself, but the maximum size of the map is 131*21. Hidden inside the mysterious door are small games such as 2048, Snake game, Airplane Battle Game, and Sudoku. When the player enters the mysterious door, a game will randomly start, and when the player reaches a specific score, they will win the key. The difficulty of the mini game will vary with the difficulty level chosen by the player. Meanwhile, the requirements for completing different levels of difficulty vary, whether it's the main game or the mini game.
 
 ## Start Games
@@ -22,16 +22,18 @@ After experiencing the loading page, players will enter the main page. The home 
 'tips' to check the introduction
 It will automatically display mines within a 5 * 5 range around the character in the lower right corner.
 example for display mines:
-* * * * *
-* * * * *
-* * p * *
-* * * * *
-* * * * *
+0 0 0 0 0
+0 0 0 0 0
+0 0 p 0 0
+0 0 0 0 0
+0 0 0 0 0
 'm' to sweep mines (in 3 * 3)
 example for mine sweep:
-* * *
-* p *
-* * *
+0 0 0
+0 p 0
+0 0 0
+
+# Mini Games:
 
 ## Airplane Battle Game
 
@@ -89,7 +91,9 @@ This project is licensed under the MIT License.
 ### Fun Facts
 Did you know the original Snake game was created in the 1970s and gained popularity on Nokia phones in the late 1990s?
 
-## Code
+
+
+# Code
 ### Maps
 Each of our maps is randomly generated (DFS), using two vector types (MazeMap_hide & MazeMap_show) to store hidden and displayed maps. The purpose of doing this is to hide some elements, such as mines, so that they can be easily identified character's movement.
 
