@@ -22,6 +22,8 @@ After experiencing the loading page, players will enter the main page. The home 
 'tips' to check the introduction
 It will automatically display mines within a 5 * 5 range around the character in the lower right corner.
 example for display mines:
+![image](https://github.com/user-attachments/assets/84afe989-8bea-4375-9ae0-26a181a62dd7)
+
 0 0 0 0 0
 0 0 0 0 0
 0 0 p 0 0
