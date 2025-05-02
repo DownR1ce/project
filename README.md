@@ -4,6 +4,7 @@ Terminal Introder is a text-based puzzle game that combines maze, minesweeper, a
 Fan Yichen 3036459001
 Deng Antong 3036459362
 Hu Menghan 3036325652
+Gao YiJia 3036452687
 
 
 # Gameplay(Make sure to pull the terminal to its maximum when playing.):
