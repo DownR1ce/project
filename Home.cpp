@@ -279,7 +279,7 @@ vector <int> getXY(){
     else if(diff == '4'){
         int x,y;
         while (true){
-            cout<<"Please enter the size you want to challenge, please both bigger than 7(x(max:131)and y(max:21))\nONLY OOD!!!!!!!"<<endl;
+            cout<<"Please enter the size you want to challenge, please both bigger than 7(x(max:131)and y(max:21))\nONLY OOD!!!!!!!\n(If you enter letters, it will cause the game to crash)"<<endl;
             cin >> x >> y;
             if (x%2==0||y%2==0||x<7||y<7||y>21||x>131){
                 cout << "\033[2J\033[H";
