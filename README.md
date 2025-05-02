@@ -24,16 +24,10 @@ It will automatically display mines within a 5 * 5 range around the character in
 example for display mines:
 ![image](https://github.com/user-attachments/assets/84afe989-8bea-4375-9ae0-26a181a62dd7)
 
-0 0 0 0 0
-0 0 0 0 0
-0 0 p 0 0
-0 0 0 0 0
-0 0 0 0 0
 'm' to sweep mines (in 3 * 3)
 example for mine sweep:
-0 0 0
-0 p 0
-0 0 0
+![image](https://github.com/user-attachments/assets/f620313a-9548-420d-83f5-a533ad9c47cc)
+
 
 # Mini Games:
 
