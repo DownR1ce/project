@@ -8,7 +8,7 @@ Gao YiJia 3036452687
 
 
 # Gameplay(Make sure to pull the terminal to its maximum when playing.):
-The core gameplay of this game is to find all mysterious doors through the maze to obtain keys, and to ensure the survival of the character, try to avoid stepping on landmines as much as possible, and finally find the exit. This game has three built-in game difficulty levels(mazemap size: x*y): easy (11X11), normal (15X15) and hard (31X19). You also can challenge a higher level of difficulty. you can choose the size of map yourself, but the maximum size of the map is 131X21. Hidden inside the mysterious door are small games such as 2048, Snake game, Airplane Battle Game, and Sudoku. When the player enters the mysterious door, a game will randomly start, and when the player reaches a specific score, they will win the key. The difficulty of the mini game will vary with the difficulty level chosen by the player. Meanwhile, the requirements for completing different levels of difficulty vary, whether it's the main game or the mini game.
+Navigate a maze to find mysterious doors that unlock mini-games like 2048, Snake, Airplane Battle, and Sudoku. Earn keys by achieving specific scores in these mini-games, avoid hidden landmines, and find the exit to complete the game. Choose from three difficulty levels—Easy (11x11 maze), Normal (15x15), Hard (31x19)—or set a custom maze size up to 131x21. The difficulty level impacts both the maze complexity and mini-game challenges, with completion requirements varying accordingly.
 
 ## Start Games
 player need to input "make game" on the terminal, and then after few second, input "./game".
