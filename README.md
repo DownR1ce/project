@@ -90,6 +90,59 @@ This project is licensed under the MIT License.
 ### Fun Facts
 Did you know the original Snake game was created in the 1970s and gained popularity on Nokia phones in the late 1990s?
 
+## 2048
+
+### Introduction
+The 2048 mini game in Terminal Intruder is a text-based implementation of the popular tile-matching puzzle. The game is played on a 4x4 grid filled with tiles that have values of 2 or 4. The goal is to combine tiles with the same value by sliding them in four directions (up, down, left, or right) to create a tile with the value of 2048. Each move causes all tiles to slide as far as possible in the chosen direction, and tiles with matching values that are adjacent after the slide will merge into one tile with a combined value.
+
+### Features
+- **Simple Interface**: A clean text-based 4x4 grid display.
+- **Intuitive Controls**: Use arrow keys (Up, Down, Left, Right) to slide the tiles.
+- **Scoring System**: Points are awarded for each tile merge, and the score is displayed during the game.
+- **Dynamic Difficulty**: The difficulty of the game scales with the overall difficulty level chosen for Terminal Intruder, affecting the initial tile values and the speed at which the grid fills up.
+
+### Gameplay Rules
+- **Tile Movement**: Tiles slide in the chosen direction until they hit another tile or the edge of the grid.
+- **Merging Tiles**: When two tiles with the same value collide during a slide, they merge into a single tile with a value equal to the sum of the original tiles (e.g., two 2s merge into a 4, two 4s merge into an 8, and so on).
+- **Game Over**: The game ends when the grid is full and no more moves are possible.
+- **Win Condition**: The player wins when they successfully create a tile with the value of 2048.
+
+### Controls
+- **Arrow Keys**:
+  - **Up**: Slide all tiles upwards.
+  - **Down**: Slide all tiles downwards.
+  - **Left**: Slide all tiles to the left.
+  - **Right**: Slide all tiles to the right.
+
+### License
+This mini game is licensed under the MIT License, same as the overall Terminal Intruder project.
+
+
+## Sudoku
+
+### Introduction
+The Sudoku mini game in Terminal Intruder is a traditional number-placement puzzle presented in a text-based format. The game is played on a 9x9 grid, which is further divided into nine 3x3 sub-grids. Some cells are pre-filled with numbers ranging from 1 to 9, and the player's task is to fill in the remaining empty cells. The objective is to ensure that each row, each column, and each 3x3 sub-grid contains all the numbers from 1 to 9 without any repetition.
+
+### Features
+- **Classic Puzzle**: Follows the standard Sudoku rules, providing a challenging logic-based experience.
+- **Text-based Display**: The 9x9 grid is clearly shown in the terminal, with pre-filled numbers highlighted for easy identification.
+- **Difficulty Scaling**: The level of difficulty adapts to the overall difficulty setting of Terminal Intruder, with harder modes featuring fewer pre-filled cells and more complex puzzles.
+- **Error Detection**: The game alerts the player if they enter a number that violates the Sudoku rules (i.e., duplicates in a row, column, or sub-grid).
+
+### Gameplay Rules
+- **Filling Cells**: Players enter numbers from 1 to 9 into the empty cells of the 9x9 grid.
+- **Row, Column, and Sub-grid Constraints**: Each row, column, and 3x3 sub-grid must contain all the numbers from 1 to 9 exactly once.
+- **Win Condition**: The player wins when the entire 9x9 grid is filled correctly, satisfying all the Sudoku rules.
+- **Game Over**: There is no traditional "game over" in Sudoku; players can continue to attempt to solve the puzzle until they complete it or choose to exit.
+
+### Controls
+- **Number Input**: Type the number (1-9) corresponding to the cell you want to fill. Use the cursor movement keys to navigate between cells.
+- **Clear Input**: If you make a mistake, you can overwrite the incorrect number with the correct one.
+- **Exit**: Type a specific command (e.g., "quit") to exit the Sudoku mini game and return to the main Terminal Intruder game.
+
+### License
+This Sudoku mini game is also licensed under the MIT License, consistent with the rest of the Terminal Intruder project. 
+
 
 
 # Code
