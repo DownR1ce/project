@@ -17,6 +17,7 @@ void showLoadingBar();
 void showLoadingScreen();
 vector <int> getXY();
 extern char difficulty_of_the_quanbuyouxi;
+void tips123();
 
 
 #endif
