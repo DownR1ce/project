@@ -12,9 +12,11 @@
 #ifdef _WIN32
     #include <windows.h>
     #define SLEEP(ms) Sleep(ms)
+    #define CLEAR_SCREEN() system("cls")
 #else
     #include <unistd.h>
     #define SLEEP(ms) usleep(ms * 1000)
+    #define CLEAR_SCREEN() system("clear")
 #endif
 
 using namespace std;
@@ -112,6 +114,14 @@ bool game(string ch){
         }
         if (order == "m"){
             Saolei(order, maps);
+        }
+        if (order == "tips"){
+            CLEAR_SCREEN();
+            tips123();
+            string asbd;
+            if (cin >> asbd){
+                CLEAR_SCREEN();
+            }
         }
         vector <string> Map_Output_vector;
         for(int i = 0; i<maps.MazeMap_show.size(); i++){
