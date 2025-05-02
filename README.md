@@ -1,4 +1,38 @@
-# project 测试
+# Terminal Intruder
+Terminal Introder is a text-based puzzle game that combines maze, minesweeper, and various mini games.
+## Team members:
+Fan Yichen 3036459001
+
+
+## Gameplay(Make sure to pull the terminal to its maximum when playing.)
+The core gameplay of this game is to find all mysterious doors through the maze to obtain keys, and to ensure the survival of the character, try to avoid stepping on landmines as much as possible, and finally find the exit. This game has three built-in game difficulty levels(mazemap size: x*y): easy (11*11), normal (15*15) and hard (31*19). You also can challenge a higher level of difficulty. you can choose the size of map yourself, but the maximum size of the map is 131*21. Hidden inside the mysterious door are small games such as 2048, Snake game, Airplane Battle Game, and Sudoku. When the player enters the mysterious door, a game will randomly start, and when the player reaches a specific score, they will win the key. The difficulty of the mini game will vary with the difficulty level chosen by the player. Meanwhile, the requirements for completing different levels of difficulty vary, whether it's the main game or the mini game.
+
+## Start Games
+player need to input "make game" on the terminal, and then after few second, input "./game".
+
+### Operation (in Home page)
+After experiencing the loading page, players will enter the main page. The home page has four functions: starting a new game (N), loading stored games (S), viewing game introductions (T), and exiting games (Q). Players can choose according to their own needs.
+
+### Operation (in main game)
+'wasd' to control character (p) movement.
+'q' to quit the game
+'save' to save the game
+'q' to exit the game
+'e' to interact with the door (both for exist and enter the mysterious door)
+'tips' to check the introduction
+It will automatically display mines within a 5 * 5 range around the character in the lower right corner.
+example for display mines:
+* * * * *
+* * * * *
+* * p * *
+* * * * *
+* * * * *
+'m' to sweep mines (in 3 * 3)
+example for mine sweep:
+* * *
+* p *
+* * *
+
 ## Airplane Battle Game
 
 ### Introduction
@@ -54,3 +88,28 @@ This project is licensed under the MIT License.
 
 ### Fun Facts
 Did you know the original Snake game was created in the 1970s and gained popularity on Nokia phones in the late 1990s?
+
+## Code
+### Maps
+Each of our maps is randomly generated (DFS), using two vector types (MazeMap_hide & MazeMap_show) to store hidden and displayed maps. The purpose of doing this is to hide some elements, such as mines, so that they can be easily identified character's movement.
+
+### Player
+Multiple global variables were used (extern variables in .h file), such as player's heart, number_of_minesweeping and so on. This can facilitate judgment in each different file. The player coordinates are recorded through a struct type called coordinate.
+
+### Movement
+By comparing using MazeMap_hide and MazeMap_show, determine which blocks players can move, which blocks are mines, and which blocks are doors.
+
+### Mini Games
+We have completed four different mini games and integrated them into a vector variable, which can be used to generate random numbers to achieve the method of randomly entering the mini game.
+
+### utils
+By using visual numbers to alert players of the number of mines around(5*5). The map can be centered in the terminal output.
+
+### Ctime
+Using the Ctime library to simulate loading pages
+
+### Different Environments
+The code will automatically determine the player's environment, such as Windows or iOS, and execute different code commands.
+
+# Author's Words
+"Remember, this game requires good memory and intelligence, use your brain to find the solution!!! :) I guarantee that every map has a solution. You can determine which row or column has mines by constantly moving your character and check the mine number, which is completely different from normal Minesweeping O.o, That's it, have a fun in Terminal Intruder!!"
